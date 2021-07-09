@@ -374,18 +374,22 @@ bool EventTools::SaveTriggerDecisions(nano_tree& nano, pico_tree& pico, bool isZ
   pico.out_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL()        = nano.HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL();
   pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ()       = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ();
   pico.out_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ()     = nano.HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ();
+  pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8() = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8();
+  pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8()   = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8();
   pico.out_HLT_Photon175()                             = nano.HLT_Photon175();
 
 
   if (isZgamma)
-    return true;
+    if ((dataset==Dataset::DoubleMuon) && muon_trigs) return true;
+    else if (((year==2018 && dataset==Dataset::EGamma) || ((year==2016 || year==2017) && dataset==Dataset::DoubleEG)) && egamma_trigs) return true;
+    else return false;
   else {
     // this assumes that we process either all the datasets or at least an ordered subset starting with the MET 
     // e.g. after measuring trigger efficiency, it would no longer be necessary to run on JetHT
     if (dataset==Dataset::MET                                                                && met_trigs) return true;
     else if (year==2018 && dataset==Dataset::EGamma                         && egamma_trigs && !met_trigs) return true;
     else if ((year==2016 || year==2017) && dataset==Dataset::SingleElectron && egamma_trigs && !met_trigs) return true;
-    else if (dataset==Dataset::SingleMuon                    && muon_trigs && !egamma_trigs && !met_trigs) return true;
+    else if ((dataset==Dataset::SingleMuon || dataset==Dataset::DoubleMuon) && muon_trigs && !egamma_trigs && !met_trigs) return true;
     else if (dataset==Dataset::JetHT         && jetht_trigs && !muon_trigs && !egamma_trigs && !met_trigs) return true;
     else return false;
   }

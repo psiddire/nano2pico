@@ -24,6 +24,8 @@ keep nll
 keep nllphoton
 keep nmu
 keep nel
+keep nvmu
+keep nvel
 keep nphoton
 
 keep pass*

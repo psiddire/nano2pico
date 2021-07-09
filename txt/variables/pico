@@ -59,6 +59,9 @@ vector<float> llphoton_dr
 vector<float> llphoton_dphi
 vector<float> llphoton_deta
 vector<float> llphoton_costhj
+vector<float> llphoton_costheta
+vector<float> llphoton_cosTheta
+vector<float> llphoton_psi
 vector<int>   llphoton_iph
 vector<int>   llphoton_ill
 
@@ -156,10 +159,14 @@ vector<float> mu_dz
 vector<float> mu_dxy
 vector<float> mu_ip3d
 vector<float> mu_sip3d
-vector<bool>  mu_id
+vector<bool>  mu_looseid
+vector<bool>  mu_mediumid
+vector<bool>  mu_tightid
+vector<char>  mu_highptid
 vector<bool>  mu_sig
 vector<int>   mu_charge
 vector<int>   mu_pflavor
+vector<int>   mu_fsrphotonid
 
 int nel
 int nvel
@@ -192,7 +199,6 @@ vector<float> ll_deta
 vector<int>   ll_lepid
 vector<int>   ll_i1
 vector<int>   ll_i2
-vector<int>   ll_charge
 
 ##################   Photons   ###################
 int nphoton
@@ -209,6 +215,15 @@ vector<int>   photon_pflavor
 vector<bool>  photon_id
 vector<bool>  photon_elveto
 vector<bool>  photon_sig
+
+#################   FsrPhotons  ##################
+int nfsrphoton
+vector<float> fsrphoton_droveret2
+vector<float> fsrphoton_eta
+vector<float> fsrphoton_phi
+vector<float> fsrphoton_pt
+vector<float> fsrphoton_reliso
+vector<int>   fsrphoton_muonidx
 
 ###################   Tracks    ##################
 int ntk
@@ -414,6 +429,8 @@ bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL
 bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ
 bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ
+bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
+bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8
 bool HLT_Photon175
 
 ################  Systematic variations  - to be implemented as needed  ##################

@@ -1,0 +1,271 @@
+*Br  385 :HLTriggerFirstPath : Bool_t Trigger/flag bit                       *
+*Br  386 :HLT_CaloJet500_NoJetID : Bool_t Trigger/flag bit                   *
+*Br  387 :HLT_CaloJet550_NoJetID : Bool_t Trigger/flag bit                   *
+*Br  388 :HLT_Trimuon2_Upsilon5_Muon : Bool_t Trigger/flag bit               *
+*Br  389 :HLT_DoubleEle33_CaloIdL_MW : Bool_t Trigger/flag bit               *
+*Br  390 :HLT_DoubleMu4_3_Bs : Bool_t Trigger/flag bit                       *
+*Br  391 :HLT_DoubleMu4_3_Jpsi_Displaced : Bool_t Trigger/flag bit           *
+*Br  392 :HLT_DoubleMu4_JpsiTrk_Displaced : Bool_t Trigger/flag bit          *
+*Br  393 :HLT_DoubleMu4_LowMassNonResonantTrk_Displaced :                    *
+*Br  394 :HLT_DoubleMu3_Trk_Tau3mu : Bool_t Trigger/flag bit                 *
+*Br  395 :HLT_DoubleMu4_PsiPrimeTrk_Displaced : Bool_t Trigger/flag bit      *
+*Br  396 :HLT_Mu7p5_Track2_Jpsi : Bool_t Trigger/flag bit                    *
+*Br  397 :HLT_Mu7p5_Track3p5_Jpsi : Bool_t Trigger/flag bit                  *
+*Br  398 :HLT_Mu7p5_Track7_Jpsi : Bool_t Trigger/flag bit                    *
+*Br  399 :HLT_Mu7p5_Track2_Upsilon : Bool_t Trigger/flag bit                 *
+*Br  400 :HLT_Mu7p5_Track3p5_Upsilon : Bool_t Trigger/flag bit               *
+*Br  401 :HLT_Mu7p5_Track7_Upsilon : Bool_t Trigger/flag bit                 *
+*Br  402 :HLT_DoublePhoton33_CaloIdL : Bool_t Trigger/flag bit               *
+*Br  403 :HLT_DoublePhoton70 : Bool_t Trigger/flag bit                       *
+*Br  404 :HLT_DoublePhoton85 : Bool_t Trigger/flag bit                       *
+*Br  405 :HLT_Ele27_WPTight_Gsf : Bool_t Trigger/flag bit                    *
+*Br  406 :HLT_Ele35_WPTight_Gsf : Bool_t Trigger/flag bit                    *
+*Br  407 :HLT_Ele38_WPTight_Gsf : Bool_t Trigger/flag bit                    *
+*Br  408 :HLT_Ele40_WPTight_Gsf : Bool_t Trigger/flag bit                    *
+*Br  409 :HLT_Ele32_WPTight_Gsf_L1DoubleEG : Bool_t Trigger/flag bit         *
+*Br  410 :HLT_HT450_Beamspot : Bool_t Trigger/flag bit                       *
+*Br  411 :HLT_HT300_Beamspot : Bool_t Trigger/flag bit                       *
+*Br  412 :HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1 :         *
+*Br  413 :HLT_IsoMu20_eta2p1_MediumChargedIsoPFTau27_eta2p1_CrossL1 :        *
+*Br  414 :HLT_IsoMu20_eta2p1_TightChargedIsoPFTau27_eta2p1_CrossL1 :         *
+*Br  415 :HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_TightID_CrossL1 : *
+*Br  416 :HLT_IsoMu20_eta2p1_MediumChargedIsoPFTau27_eta2p1_TightID_CrossL1 : *
+*Br  417 :HLT_IsoMu20_eta2p1_TightChargedIsoPFTau27_eta2p1_TightID_CrossL1 : *
+*Br  418 :HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1 :               *
+*Br  419 :HLT_IsoMu24_eta2p1_MediumChargedIsoPFTau20_SingleL1 :              *
+*Br  420 :HLT_IsoMu24_eta2p1_TightChargedIsoPFTau20_SingleL1 :               *
+*Br  421 :HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_TightID_SingleL1 :       *
+*Br  422 :HLT_IsoMu24_eta2p1_MediumChargedIsoPFTau20_TightID_SingleL1 :      *
+*Br  423 :HLT_IsoMu24_eta2p1_TightChargedIsoPFTau20_TightID_SingleL1 :       *
+*Br  424 :HLT_IsoMu20 : Bool_t Trigger/flag bit                              *
+*Br  425 :HLT_IsoMu24 : Bool_t Trigger/flag bit                              *
+*Br  426 :HLT_IsoMu24_eta2p1 : Bool_t Trigger/flag bit                       *
+*Br  427 :HLT_IsoMu27 : Bool_t Trigger/flag bit                              *
+*Br  428 :HLT_UncorrectedJetE30_NoBPTX : Bool_t Trigger/flag bit             *
+*Br  429 :HLT_UncorrectedJetE30_NoBPTX3BX : Bool_t Trigger/flag bit          *
+*Br  430 :HLT_UncorrectedJetE60_NoBPTX3BX : Bool_t Trigger/flag bit          *
+*Br  431 :HLT_UncorrectedJetE70_NoBPTX3BX : Bool_t Trigger/flag bit          *
+*Br  432 :HLT_L1SingleMu18 : Bool_t Trigger/flag bit                         *
+*Br  433 :HLT_L1SingleMu25 : Bool_t Trigger/flag bit                         *
+*Br  434 :HLT_L2Mu10 : Bool_t Trigger/flag bit                               *
+*Br  435 :HLT_L2Mu10_NoVertex_NoBPTX3BX : Bool_t Trigger/flag bit            *
+*Br  436 :HLT_L2Mu10_NoVertex_NoBPTX : Bool_t Trigger/flag bit               *
+*Br  437 :HLT_L2Mu45_NoVertex_3Sta_NoBPTX3BX : Bool_t Trigger/flag bit       *
+*Br  438 :HLT_L2Mu40_NoVertex_3Sta_NoBPTX3BX : Bool_t Trigger/flag bit       *
+*Br  439 :HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL : Bool_t Trigger/flag bit         *
+*Br  440 :HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ : Bool_t Trigger/flag bit      *
+*Br  441 :HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8 : Bool_t Trigger/flag bit*
+*Br  442 :HLT_Mu30_TkMu0_Onia : Bool_t Trigger/flag bit                      *
+*Br  443 :HLT_Mu20_TkMu0_Phi : Bool_t Trigger/flag bit                       *
+*Br  444 :HLT_Mu20  : Bool_t Trigger/flag bit                                *
+*Br  445 :HLT_Mu27  : Bool_t Trigger/flag bit                                *
+*Br  446 :HLT_Mu50  : Bool_t Trigger/flag bit                                *
+*Br  447 :HLT_DiPFJet15_NoCaloMatched : Bool_t Trigger/flag bit              *
+*Br  448 :HLT_DiPFJet25_NoCaloMatched : Bool_t Trigger/flag bit              *
+*Br  449 :HLT_DiPFJet15_FBEta3_NoCaloMatched : Bool_t Trigger/flag bit       *
+*Br  450 :HLT_DiPFJet25_FBEta3_NoCaloMatched : Bool_t Trigger/flag bit       *
+*Br  451 :HLT_DiPFJetAve15_HFJEC : Bool_t Trigger/flag bit                   *
+*Br  452 :HLT_DiPFJetAve25_HFJEC : Bool_t Trigger/flag bit                   *
+*Br  453 :HLT_DiPFJetAve35_HFJEC : Bool_t Trigger/flag bit                   *
+*Br  454 :HLT_AK8PFJet40 : Bool_t Trigger/flag bit                           *
+*Br  455 :HLT_AK8PFJet60 : Bool_t Trigger/flag bit                           *
+*Br  456 :HLT_AK8PFJet80 : Bool_t Trigger/flag bit                           *
+*Br  457 :HLT_AK8PFJet140 : Bool_t Trigger/flag bit                          *
+*Br  458 :HLT_AK8PFJet200 : Bool_t Trigger/flag bit                          *
+*Br  459 :HLT_AK8PFJet260 : Bool_t Trigger/flag bit                          *
+*Br  460 :HLT_AK8PFJet320 : Bool_t Trigger/flag bit                          *
+*Br  461 :HLT_AK8PFJet400 : Bool_t Trigger/flag bit                          *
+*Br  462 :HLT_AK8PFJet450 : Bool_t Trigger/flag bit                          *
+*Br  463 :HLT_AK8PFJet500 : Bool_t Trigger/flag bit                          *
+*Br  464 :HLT_AK8PFJet550 : Bool_t Trigger/flag bit                          *
+*Br  465 :HLT_PFJet40 : Bool_t Trigger/flag bit                              *
+*Br  466 :HLT_PFJet60 : Bool_t Trigger/flag bit                              *
+*Br  467 :HLT_PFJet80 : Bool_t Trigger/flag bit                              *
+*Br  468 :HLT_PFJet140 : Bool_t Trigger/flag bit                             *
+*Br  469 :HLT_PFJet200 : Bool_t Trigger/flag bit                             *
+*Br  470 :HLT_PFJet260 : Bool_t Trigger/flag bit                             *
+*Br  471 :HLT_PFJet320 : Bool_t Trigger/flag bit                             *
+*Br  472 :HLT_PFJet400 : Bool_t Trigger/flag bit                             *
+*Br  473 :HLT_PFJet450 : Bool_t Trigger/flag bit                             *
+*Br  474 :HLT_PFJet500 : Bool_t Trigger/flag bit                             *
+*Br  475 :HLT_PFJet550 : Bool_t Trigger/flag bit                             *
+*Br  476 :HLT_PFHT180 : Bool_t Trigger/flag bit                              *
+*Br  477 :HLT_PFHT250 : Bool_t Trigger/flag bit                              *
+*Br  478 :HLT_PFHT370 : Bool_t Trigger/flag bit                              *
+*Br  479 :HLT_PFHT430 : Bool_t Trigger/flag bit                              *
+*Br  480 :HLT_PFHT510 : Bool_t Trigger/flag bit                              *
+*Br  481 :HLT_PFHT590 : Bool_t Trigger/flag bit                              *
+*Br  482 :HLT_PFHT680 : Bool_t Trigger/flag bit                              *
+*Br  483 :HLT_PFHT780 : Bool_t Trigger/flag bit                              *
+*Br  484 :HLT_PFHT890 : Bool_t Trigger/flag bit                              *
+*Br  485 :HLT_PFHT1050 : Bool_t Trigger/flag bit                             *
+*Br  486 :HLT_PFHT500_PFMET100_PFMHT100_IDTight : Bool_t Trigger/flag bit    *
+*Br  487 :HLT_PFHT500_PFMET110_PFMHT110_IDTight : Bool_t Trigger/flag bit    *
+*Br  488 :HLT_PFHT700_PFMET85_PFMHT85_IDTight : Bool_t Trigger/flag bit      *
+*Br  489 :HLT_PFHT700_PFMET95_PFMHT95_IDTight : Bool_t Trigger/flag bit      *
+*Br  490 :HLT_PFHT800_PFMET75_PFMHT75_IDTight : Bool_t Trigger/flag bit      *
+*Br  491 :HLT_PFHT800_PFMET85_PFMHT85_IDTight : Bool_t Trigger/flag bit      *
+*Br  492 :HLT_PFMET110_PFMHT110_IDTight : Bool_t Trigger/flag bit            *
+*Br  493 :HLT_PFMET120_PFMHT120_IDTight : Bool_t Trigger/flag bit            *
+*Br  494 :HLT_PFMET130_PFMHT130_IDTight : Bool_t Trigger/flag bit            *
+*Br  495 :HLT_PFMET140_PFMHT140_IDTight : Bool_t Trigger/flag bit            *
+*Br  496 :HLT_PFMETTypeOne110_PFMHT110_IDTight : Bool_t Trigger/flag bit     *
+*Br  497 :HLT_PFMETTypeOne120_PFMHT120_IDTight : Bool_t Trigger/flag bit     *
+*Br  498 :HLT_PFMETTypeOne130_PFMHT130_IDTight : Bool_t Trigger/flag bit     *
+*Br  499 :HLT_PFMETTypeOne140_PFMHT140_IDTight : Bool_t Trigger/flag bit     *
+*Br  500 :HLT_PFMETNoMu110_PFMHTNoMu110_IDTight : Bool_t Trigger/flag bit    *
+*Br  501 :HLT_PFMETNoMu120_PFMHTNoMu120_IDTight : Bool_t Trigger/flag bit    *
+*Br  502 :HLT_MonoCentralPFJet80_PFMETNoMu110_PFMHTNoMu110_IDTight :         *
+*Br  503 :HLT_MonoCentralPFJet80_PFMETNoMu120_PFMHTNoMu120_IDTight :         *
+*Br  504 :HLT_Photon300_NoHE : Bool_t Trigger/flag bit                       *
+*Br  505 :HLT_Mu8_TrkIsoVVL : Bool_t Trigger/flag bit                        *
+*Br  506 :HLT_Mu8_DiEle12_CaloIdL_TrackIdL_DZ : Bool_t Trigger/flag bit      *
+*Br  507 :HLT_Mu8_DiEle12_CaloIdL_TrackIdL : Bool_t Trigger/flag bit         *
+*Br  508 :HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ :                *
+*Br  509 :HLT_Mu17_TrkIsoVVL : Bool_t Trigger/flag bit                       *
+*Br  510 :HLT_BTagMu_AK4DiJet20_Mu5 : Bool_t Trigger/flag bit                *
+*Br  511 :HLT_BTagMu_AK4DiJet40_Mu5 : Bool_t Trigger/flag bit                *
+*Br  512 :HLT_BTagMu_AK4DiJet70_Mu5 : Bool_t Trigger/flag bit                *
+*Br  513 :HLT_BTagMu_AK4DiJet110_Mu5 : Bool_t Trigger/flag bit               *
+*Br  514 :HLT_BTagMu_AK4DiJet170_Mu5 : Bool_t Trigger/flag bit               *
+*Br  515 :HLT_BTagMu_AK4Jet300_Mu5 : Bool_t Trigger/flag bit                 *
+*Br  516 :HLT_BTagMu_AK8DiJet170_Mu5 : Bool_t Trigger/flag bit               *
+*Br  517 :HLT_BTagMu_AK8Jet300_Mu5 : Bool_t Trigger/flag bit                 *
+*Br  518 :HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ : Bool_t Trigger/flag bit*
+*Br  519 :HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ :               *
+*Br  520 :HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ :               *
+*Br  521 :HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL : Bool_t Trigger/flag bit   *
+*Br  522 :HLT_Photon33 : Bool_t Trigger/flag bit                             *
+*Br  523 :HLT_Photon50 : Bool_t Trigger/flag bit                             *
+*Br  524 :HLT_Photon75 : Bool_t Trigger/flag bit                             *
+*Br  525 :HLT_Photon90 : Bool_t Trigger/flag bit                             *
+*Br  526 :HLT_Photon120 : Bool_t Trigger/flag bit                            *
+*Br  527 :HLT_Photon150 : Bool_t Trigger/flag bit                            *
+*Br  528 :HLT_Photon175 : Bool_t Trigger/flag bit                            *
+*Br  529 :HLT_Photon200 : Bool_t Trigger/flag bit                            *
+*Br  530 :HLT_Photon50_R9Id90_HE10_IsoM : Bool_t Trigger/flag bit            *
+*Br  531 :HLT_Photon75_R9Id90_HE10_IsoM : Bool_t Trigger/flag bit            *
+*Br  532 :HLT_Photon90_R9Id90_HE10_IsoM : Bool_t Trigger/flag bit            *
+*Br  533 :HLT_Photon120_R9Id90_HE10_IsoM : Bool_t Trigger/flag bit           *
+*Br  534 :HLT_Photon165_R9Id90_HE10_IsoM : Bool_t Trigger/flag bit           *
+*Br  535 :HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90 :           *
+*Br  536 :HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass95 :           *
+*Br  537 :HLT_Diphoton30PV_18PV_R9Id_AND_IsoCaloId_AND_HE_R9Id_PixelVeto_Mass55 : *
+*Br  538 :HLT_Diphoton30PV_18PV_R9Id_AND_IsoCaloId_AND_HE_R9Id_NoPixelVeto_Mass55 : *
+*Br  539 :HLT_Diphoton30EB_18EB_R9Id_OR_IsoCaloId_AND_HE_R9Id_NoPixelVeto_Mass55 : *
+*Br  540 :HLT_Diphoton30EB_18EB_R9Id_OR_IsoCaloId_AND_HE_R9Id_PixelVeto_Mass55 : *
+*Br  541 :HLT_Dimuon0_LowMass_L1_0er1p5R : Bool_t Trigger/flag bit           *
+*Br  542 :HLT_Dimuon0_LowMass_L1_4R : Bool_t Trigger/flag bit                *
+*Br  543 :HLT_TripleMu_10_5_5_DZ : Bool_t Trigger/flag bit                   *
+*Br  544 :HLT_TripleMu_12_10_5 : Bool_t Trigger/flag bit                     *
+*Br  545 :HLT_DoubleMu4_Jpsi_Displaced : Bool_t Trigger/flag bit             *
+*Br  546 :HLT_DoubleMu4_Jpsi_NoVertexing : Bool_t Trigger/flag bit           *
+*Br  547 :HLT_DoubleMu20_7_Mass0to30_L1_DM4EG : Bool_t Trigger/flag bit      *
+*Br  548 :HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned :           *
+*Br  549 :HLT_Ele28_eta2p1_WPTight_Gsf_HT150 : Bool_t Trigger/flag bit       *
+*Br  550 :HLT_DoubleMu20_7_Mass0to30_Photon23 : Bool_t Trigger/flag bit      *
+*Br  551 :HLT_Dimuon10_PsiPrime_Barrel_Seagulls : Bool_t Trigger/flag bit    *
+*Br  552 :HLT_Dimuon20_Jpsi_Barrel_Seagulls : Bool_t Trigger/flag bit        *
+*Br  553 :HLT_Dimuon12_Upsilon_eta1p5 : Bool_t Trigger/flag bit              *
+*Br  554 :HLT_Dimuon14_Phi_Barrel_Seagulls : Bool_t Trigger/flag bit         *
+*Br  555 :HLT_Dimuon18_PsiPrime : Bool_t Trigger/flag bit                    *
+*Br  556 :HLT_Dimuon25_Jpsi : Bool_t Trigger/flag bit                        *
+*Br  557 :HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ : Bool_t Trigger/flag bit       *
+*Br  558 :HLT_DiMu9_Ele9_CaloIdL_TrackIdL : Bool_t Trigger/flag bit          *
+*Br  559 :HLT_Mu8   : Bool_t Trigger/flag bit                                *
+*Br  560 :HLT_Mu17  : Bool_t Trigger/flag bit                                *
+*Br  561 :HLT_HT300PT30_QuadJet_75_60_45_40 : Bool_t Trigger/flag bit        *
+*Br  562 :HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07 :                   *
+*Br  563 :HLT_PFHT380_SixJet32_DoubleBTagCSV_p075 : Bool_t Trigger/flag bit  *
+*Br  564 :HLT_PFHT430_SixJet40_BTagCSV_p080 : Bool_t Trigger/flag bit        *
+*Br  565 :HLT_PFHT350 : Bool_t Trigger/flag bit                              *
+*Br  566 :HLT_Photon60_R9Id90_CaloIdL_IsoL_DisplacedIdL_PFHT350MinPFJet15 :  *
+*Br  567 :HLT_FullTrack_Multiplicity85 : Bool_t Trigger/flag bit             *
+*Br  568 :HLT_FullTrack_Multiplicity105 : Bool_t Trigger/flag bit            *
+*Br  569 :HLT_FullTrack_Multiplicity135 : Bool_t Trigger/flag bit            *
+*Br  570 :HLT_FullTrack_Multiplicity155 : Bool_t Trigger/flag bit            *
+*Br  571 :HLT_ECALHT800 : Bool_t Trigger/flag bit                            *
+*Br  572 :HLT_DiSC30_18_EIso_AND_HE_Mass70 : Bool_t Trigger/flag bit         *
+*Br  573 :HLT_Physics : Bool_t Trigger/flag bit                              *
+*Br  574 :HLT_Random : Bool_t Trigger/flag bit                               *
+*Br  575 :HLT_ZeroBias : Bool_t Trigger/flag bit                             *
+*Br  576 :HLT_AK4CaloJet30 : Bool_t Trigger/flag bit                         *
+*Br  577 :HLT_AK4CaloJet40 : Bool_t Trigger/flag bit                         *
+*Br  578 :HLT_AK4CaloJet50 : Bool_t Trigger/flag bit                         *
+*Br  579 :HLT_AK4CaloJet80 : Bool_t Trigger/flag bit                         *
+*Br  580 :HLT_AK4CaloJet100 : Bool_t Trigger/flag bit                        *
+*Br  581 :HLT_AK4CaloJet120 : Bool_t Trigger/flag bit                        *
+*Br  582 :HLT_AK4PFJet30 : Bool_t Trigger/flag bit                           *
+*Br  583 :HLT_AK4PFJet50 : Bool_t Trigger/flag bit                           *
+*Br  584 :HLT_AK4PFJet80 : Bool_t Trigger/flag bit                           *
+*Br  585 :HLT_AK4PFJet100 : Bool_t Trigger/flag bit                          *
+*Br  586 :HLT_AK4PFJet120 : Bool_t Trigger/flag bit                          *
+*Br  587 :HLT_HISinglePhoton10_Eta3p1ForPPRef : Bool_t Trigger/flag bit      *
+*Br  588 :HLT_HISinglePhoton20_Eta3p1ForPPRef : Bool_t Trigger/flag bit      *
+*Br  589 :HLT_HISinglePhoton30_Eta3p1ForPPRef : Bool_t Trigger/flag bit      *
+*Br  590 :HLT_HISinglePhoton40_Eta3p1ForPPRef : Bool_t Trigger/flag bit      *
+*Br  591 :HLT_HISinglePhoton50_Eta3p1ForPPRef : Bool_t Trigger/flag bit      *
+*Br  592 :HLT_HISinglePhoton60_Eta3p1ForPPRef : Bool_t Trigger/flag bit      *
+*Br  593 :HLT_Photon20_HoverELoose : Bool_t Trigger/flag bit                 *
+*Br  594 :HLT_Photon30_HoverELoose : Bool_t Trigger/flag bit                 *
+*Br  595 :HLT_Photon40_HoverELoose : Bool_t Trigger/flag bit                 *
+*Br  596 :HLT_Photon50_HoverELoose : Bool_t Trigger/flag bit                 *
+*Br  597 :HLT_Photon60_HoverELoose : Bool_t Trigger/flag bit                 *
+*Br  598 :HLT_EcalCalibration : Bool_t Trigger/flag bit                      *
+*Br  599 :HLT_HcalCalibration : Bool_t Trigger/flag bit                      *
+*Br  600 :HLT_L1UnpairedBunchBptxMinus : Bool_t Trigger/flag bit             *
+*Br  601 :HLT_L1UnpairedBunchBptxPlus : Bool_t Trigger/flag bit              *
+*Br  602 :HLT_L1NotBptxOR : Bool_t Trigger/flag bit                          *
+*Br  603 :HLT_L1MinimumBiasHF_OR : Bool_t Trigger/flag bit                   *
+*Br  604 :HLT_L1MinimumBiasHF0OR : Bool_t Trigger/flag bit                   *
+*Br  605 :HLT_HcalNZS : Bool_t Trigger/flag bit                              *
+*Br  606 :HLT_HcalPhiSym : Bool_t Trigger/flag bit                           *
+*Br  607 :HLT_ZeroBias_FirstCollisionAfterAbortGap : Bool_t Trigger/flag bit *
+*Br  608 :HLT_ZeroBias_IsolatedBunches : Bool_t Trigger/flag bit             *
+*Br  609 :HLT_ZeroBias_FirstCollisionInTrain : Bool_t Trigger/flag bit       *
+*Br  610 :HLT_ZeroBias_LastCollisionInTrain : Bool_t Trigger/flag bit        *
+*Br  611 :HLT_ZeroBias_FirstBXAfterTrain : Bool_t Trigger/flag bit           *
+*Br  612 :HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1 : *
+*Br  613 :HLT_Ele24_eta2p1_WPTight_Gsf_MediumChargedIsoPFTau30_eta2p1_CrossL1 : *
+*Br  614 :HLT_Ele24_eta2p1_WPTight_Gsf_TightChargedIsoPFTau30_eta2p1_CrossL1 : *
+*Br  615 :HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_TightID_CrossL1 : *
+*Br  616 :HLT_Ele24_eta2p1_WPTight_Gsf_MediumChargedIsoPFTau30_eta2p1_TightID_CrossL1 : *
+*Br  617 :HLT_Ele24_eta2p1_WPTight_Gsf_TightChargedIsoPFTau30_eta2p1_TightID_CrossL1 : *
+*Br  618 :HLT_DoubleLooseChargedIsoPFTau35_Trk1_eta2p1_Reg :                 *
+*Br  619 :HLT_DoubleLooseChargedIsoPFTau40_Trk1_eta2p1_Reg :                 *
+*Br  620 :HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg :                *
+*Br  621 :HLT_DoubleMediumChargedIsoPFTau40_Trk1_eta2p1_Reg :                *
+*Br  622 :HLT_DoubleTightChargedIsoPFTau35_Trk1_eta2p1_Reg :                 *
+*Br  623 :HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg :                 *
+*Br  624 :HLT_DoubleLooseChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg :         *
+*Br  625 :HLT_DoubleLooseChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg :         *
+*Br  626 :HLT_DoubleMediumChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg :        *
+*Br  627 :HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg :        *
+*Br  628 :HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg :         *
+*Br  629 :HLT_DoubleTightChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg :         *
+*Br  630 :HLT_IsoMu24_eta2p1_MediumChargedIsoPFTau50_Trk30_eta2p1_1pr :      *
+*Br  631 :HLT_MediumChargedIsoPFTau50_Trk30_eta2p1_1pr_MET90 :               *
+*Br  632 :HLT_MediumChargedIsoPFTau50_Trk30_eta2p1_1pr_MET100 :              *
+*Br  633 :HLT_MediumChargedIsoPFTau50_Trk30_eta2p1_1pr :                     *
+*Br  634 :HLT_MediumChargedIsoPFTau100HighPtRelaxedIso_Trk50_eta2p1_1pr :    *
+*Br  635 :HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1 :        *
+*Br  636 :HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau35_Trk1_eta2p1_Reg_CrossL1 : *
+*Br  637 :HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_CrossL1 : *
+*Br  638 :HLT_IsoMu24_eta2p1_MediumChargedIsoPFTau35_Trk1_eta2p1_Reg_CrossL1 : *
+*Br  639 :HLT_IsoMu24_eta2p1_MediumChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_CrossL1 : *
+*Br  640 :HLT_IsoMu24_eta2p1_TightChargedIsoPFTau35_Trk1_eta2p1_Reg_CrossL1 : *
+*Br  641 :HLT_IsoMu24_eta2p1_TightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_CrossL1 : *
+*Br  642 :HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL : Bool_t Trigger/flag bit    *
+*Br  643 :HLT_ZeroBias_part0 : Bool_t Trigger/flag bit                       *
+*Br  644 :HLT_ZeroBias_part1 : Bool_t Trigger/flag bit                       *
+*Br  645 :HLT_ZeroBias_part2 : Bool_t Trigger/flag bit                       *
+*Br  646 :HLT_ZeroBias_part3 : Bool_t Trigger/flag bit                       *
+*Br  647 :HLT_ZeroBias_part4 : Bool_t Trigger/flag bit                       *
+*Br  648 :HLT_ZeroBias_part5 : Bool_t Trigger/flag bit                       *
+*Br  649 :HLT_ZeroBias_part6 : Bool_t Trigger/flag bit                       *
+*Br  650 :HLT_ZeroBias_part7 : Bool_t Trigger/flag bit                       *
+*Br  651 :HLT_ZeroBias_part8 : Bool_t Trigger/flag bit                       *
+*Br  652 :HLT_ZeroBias_part9 : Bool_t Trigger/flag bit                       *
+*Br  653 :HLTriggerFinalPath : Bool_t Trigger/flag bit                       *
+*Br 1039 :HLT_L1FatEvents : Bool_t Trigger/flag bit                          *
+*Br 1040 :HLT_HcalIsolatedbunch : Bool_t Trigger/flag bit                    *

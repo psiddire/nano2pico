@@ -40,6 +40,7 @@ namespace {
   string out_dir = "";
   int nent_test = -1;
   bool debug = false;
+  bool isZgamma = true;
   // requirements for jets to be counted in njet, mofified for Zgamma below
   float min_jet_pt = 30.0;
   float max_jet_eta =  2.4;
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]){
 
   bool isData = Contains(in_file, "Run201") ? true : false;
   bool isFastsim = Contains(in_file, "Fast") ? true : false;
-  bool isSignal = Contains(in_file, "TChiHH") || Contains(in_file, "T5qqqqZH") ? true : false;
+  bool isSignal = Contains(in_file, "TChiHH") ? true : false;
   int year = Contains(in_file, "RunIISummer16") ? 2016 : (Contains(in_file, "RunIIFall17") ? 2017 : 2018);
   if (isData) {
     year = Contains(in_file, "Run2016") ? 2016 : (Contains(in_file, "Run2017") ? 2017 : 2018);
@@ -90,8 +91,6 @@ int main(int argc, char *argv[]){
   string out_path;
   out_path = out_dir+"/raw_pico/raw_pico_"+in_file;
 
-  bool isZgamma = Contains(out_dir, "zgamma");
-
   time_t begtime, endtime;
   time(&begtime);
 
@@ -116,7 +115,7 @@ int main(int argc, char *argv[]){
   MuonProducer mu_producer(year, isData);
   DileptonProducer dilep_producer(year);
   IsoTrackProducer tk_producer(year);
-  PhotonProducer photon_producer(year);
+  PhotonProducer photon_producer(year, isData);
   JetProducer jet_producer(year, min_jet_pt, max_jet_eta, isData);
   MetProducer met_producer(year, isData);
   HigVarProducer hig_producer(year);
@@ -166,11 +165,16 @@ int main(int argc, char *argv[]){
 
     //skip events that are data but not in the golden json
     if (isData) {
-      if(!inJSON(VVRunLumi, nano.run(), nano.luminosityBlock())) continue; 
+      if(!inJSON(VVRunLumi, nano.run(), nano.luminosityBlock())) {
+	continue;
+      }
     }
 
     bool passed_trig = event_tools.SaveTriggerDecisions(nano, pico, isZgamma);
-    if (isData && !passed_trig) continue;
+    //cout<<"Passed Trigger: "<<passed_trig<<endl;
+    if (isData && !passed_trig) {
+      continue;
+    }
 
     // event info
     pico.out_event()     = nano.event();
@@ -221,10 +225,11 @@ int main(int argc, char *argv[]){
       pico.out_lep_pdgid().push_back(ilep.pdgid);
     }
 
+    if (debug) cout<<"INFO:: Before Signal Photon Nano"<<endl;
     vector<int> jet_isphoton_nano_idx = vector<int>();
     if(isZgamma) 
-      vector<int> sig_ph_nano_idx = photon_producer.WritePhotons(nano, pico, jet_isphoton_nano_idx,
-                                                                 sig_el_nano_idx, sig_mu_nano_idx);
+      vector<int> sig_ph_nano_idx = photon_producer.WritePhotons(nano, pico, jet_isphoton_nano_idx, sig_el_nano_idx, sig_mu_nano_idx);
+    if (debug) cout<<"INFO:: After Signal Photon Nano"<<endl;
 
     tk_producer.WriteIsoTracks(nano, pico, sig_el_nano_idx, sig_mu_nano_idx, isFastsim);
 
@@ -305,6 +310,7 @@ int main(int argc, char *argv[]){
     float w_photon(1.);
     vector<float> sys_lep(2,1.), sys_fs_lep(2,1.);
     vector<float> sys_photon(2,1.);
+
     if(isZgamma) {
       photon_weighter.FullSim(pico, w_photon, sys_photon);
       if(nano.event() % 3516 <= 1887) lep_weighter.FullSim(pico, w_lep, sys_lep);

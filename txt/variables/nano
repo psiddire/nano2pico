@@ -94,6 +94,7 @@ array<float> Muon_miniPFRelIso_chg
 array<float> Muon_pfRelIso03_all
 array<float> Muon_pfRelIso03_chg
 array<float> Muon_pfRelIso04_all
+array<int>   Muon_fsrPhotonIdx
 array<float> Muon_phi
 array<float> Muon_pt
 array<float> Muon_ptErr
@@ -130,50 +131,6 @@ array<bool> Muon_triggerIdLoose
 array<int> Muon_genPartIdx
 array<char> Muon_genPartFlav
 array<char> Muon_cleanmask
-
-################ Taus ################
-
-int nTau
-array<float> Tau_chargedIso
-array<float> Tau_dxy
-array<float> Tau_dz
-array<float> Tau_eta
-array<float> Tau_leadTkDeltaEta
-array<float> Tau_leadTkDeltaPhi
-array<float> Tau_leadTkPtOverTauPt
-array<float> Tau_mass
-array<float> Tau_neutralIso
-array<float> Tau_phi
-array<float> Tau_photonsOutsideSignalCone
-array<float> Tau_pt
-array<float> Tau_puCorr
-array<float> Tau_rawAntiEle
-array<float> Tau_rawAntiEle2018
-array<float> Tau_rawIso
-array<float> Tau_rawIsodR03
-array<float> Tau_rawMVAnewDM2017v2
-array<float> Tau_rawMVAoldDM
-array<float> Tau_rawMVAoldDM2017v1
-array<float> Tau_rawMVAoldDM2017v2
-array<float> Tau_rawMVAoldDMdR032017v2
-array<int> Tau_charge
-array<int> Tau_decayMode
-array<int> Tau_jetIdx
-array<int> Tau_rawAntiEleCat
-array<int> Tau_rawAntiEleCat2018
-array<char> Tau_idAntiEle
-array<char> Tau_idAntiEle2018
-array<char> Tau_idAntiMu
-array<bool> Tau_idDecayMode
-array<bool> Tau_idDecayModeNewDMs
-array<char> Tau_idMVAnewDM2017v2
-array<char> Tau_idMVAoldDM
-array<char> Tau_idMVAoldDM2017v1
-array<char> Tau_idMVAoldDM2017v2
-array<char> Tau_idMVAoldDMdR032017v2
-array<char> Tau_cleanmask
-array<int> Tau_genPartIdx
-array<char> Tau_genPartFlav
 
 
 ################ Isolated tracks ################
@@ -229,6 +186,16 @@ array<int> Photon_genPartIdx
 array<char> Photon_genPartFlav
 array<char> Photon_cleanmask
 
+############### FsrPhotons ###############
+
+int nFsrPhoton
+array<float> FsrPhoton_dROverEt2
+array<float> FsrPhoton_eta
+array<int> FsrPhoton_muonIdx
+array<float> FsrPhoton_phi
+array<float> FsrPhoton_pt
+array<float> FsrPhoton_relIso03
+
 ################ AK4 Jets ################
 
 int nJet
@@ -278,21 +245,6 @@ array<float> Jet_mass_jerUp
 array<float> Jet_mass_jerDown
 array<float> Jet_mass_jesTotalUp
 array<float> Jet_mass_jesTotalDown
-
-################ Very soft Jets ################
-
-# jets clustered from charged candidates compatible with primary vertex (charge()!=0 && pvAssociationQuality()>=5 && vertexRef().key()==0)
-int nSoftActivityJet
-array<float> SoftActivityJet_eta
-array<float> SoftActivityJet_phi
-array<float> SoftActivityJet_pt
-float SoftActivityJetHT
-float SoftActivityJetHT10
-float SoftActivityJetHT2
-float SoftActivityJetHT5
-int SoftActivityJetNjets10
-int SoftActivityJetNjets2
-int SoftActivityJetNjets5
 
 ################ AK8 Jets ################
 
@@ -714,4 +666,6 @@ bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL
 bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ
 bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ
+bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
+bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8
 bool HLT_Photon175

@@ -1,0 +1,36 @@
+        pico.out_llphoton_costhj().push_back(cosThetaJeff(lminus,lplus,photon));
+
+        Float_t cosTheta, costheta[2], Phi[2];
+
+        dilep.Boost(-1*llg.BoostVector());
+        lminus.Boost(-1*llg.BoostVector());
+        lplus.Boost(-1*llg.BoostVector());
+
+        lminus.Boost(-1*dilep.BoostVector());
+        lplus.Boost(-1*dilep.BoostVector());
+
+        TVector3 ppAxis(0, 0, 1);
+        costheta[0] = cos(dilep.Angle(lminus.Vect()));
+        costheta[1] = cos(dilep.Angle(lplus.Vect()));
+        cosTheta = cos(dilep.Angle(llg.Vect()));
+
+        TVector3 zAxis = dilep.Vect().Unit();
+        // unit vector perpendicular to pp and Z directions (y axis)
+        TVector3 yAxis = ppAxis.Cross(zAxis.Unit()).Unit();
+        // unit vector perpendicular to Z direction in the ppZ plane (x axis)
+        TVector3 xAxis = (yAxis.Unit().Cross(zAxis.Unit())).Unit();
+
+        TRotation rotation;
+        rotation = rotation.RotateAxes(xAxis,yAxis,zAxis ).Inverse();
+        // phi
+        lminus.Transform(rotation);
+        lplus.Transform(rotation);
+        Phi[0] = lminus.Phi();
+        Phi[1] = lplus.Phi();
+
+        pico.out_llphoton_cosTheta().push_back(cosTheta);
+        pico.out_llphoton_costheta1().push_back(costheta[0]);
+        pico.out_llphoton_costheta2().push_back(costheta[1]);
+        pico.out_llphoton_Phi1().push_back(Phi[0]);
+        pico.out_llphoton_Phi2().push_back(Phi[1]);
+        pico.out_llphoton_Phi().push_back(Phi[0]-Phi[1]);
