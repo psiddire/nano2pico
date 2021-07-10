@@ -57,7 +57,6 @@ Step 1. Make an output directory out/ with subdirectories `wgt_sums` and `raw_pi
 * flag `isSignal = Contains(in_file, "TChiHH") || Contains(in_file, "T5qqqqZH") ? true : false;`
 * variable `year = infile.Contains("RunIISummer16") ? 2016 : (infile.Contains("RunIIFall17") ? 2017 : 2018)`
 * output branch `type` is set based on the presence of dataset name substrings (see event_tools.cpp)
-* branches related on ISR also depend on the presence of dataset name substrings
 
 Step 2. If you are using data, you are done! If you are using MC, for each dataset, add up the sums of weights obtained for each file in step 1 and calculate the corrections needed to normalize each individual weight as well as the total weight. Note that the order of options is fixed with the arguments after the first being the input files. This is to allow arbitrary number of input files. Note that again functionality depends on the naming, e.g. correction file name is used to decide what cross-section to use.
 Make subdirectory `corrections` in `out`.
@@ -307,14 +306,6 @@ Calculated in [tk_producer](src/tk_producer.cpp):
 * `ntrulep = ntrumu + ntruel + ntrutaul` 
 * `mprod, mlsp` - higgsino and lsp mass, with lsp mass always equal to one for the higgsino model
 
-####   ISR
-
-* `nisr` - number of ISR jets according to matching to truth, used for ISR reweighting used by the SUS PAG for strong production
-* `isr_tru_*` - MC truth, hadronic recoil, used for ISR reweighting used by the SUS PAG for weak production
-
-* `jetsys_*` - hadronic recoil, i.e. vector sum of all jets, used in V+jets ISR studies
-* `jetsys_nob_*` - hadronic recoil, i.e. vector sum of all jets that are not b-tagged, used in 2L tt+jets ISR studies
-
 #### Weights 
 
 Calculated in [process_nano](src/process_nano.cxx) and then re-normalized in subsequent production steps:
@@ -326,7 +317,6 @@ Calculated in [process_nano](src/process_nano.cxx) and then re-normalized in sub
 * `w_btag_df` - product of fullsim and fastsim b-tag SFs if counting _medium tags only_, DeepFlavour tagger
 * `w_bhig` - product of fullsim and fastsim b-tag SFs accounting for _all three WPs_ for the DeepCSV tagger
 * `w_bhig_df` - product of fullsim and fastsim b-tag SFs accounting for _all three WPs_ for the DeepFlavour tagger
-* `w_isr` - 1., except for TTJets 2016 and signal, SUSY ISR reweighting
 * `w_pu` - currently just set 1.
 * `w_prefire` - currently just set 1.
 

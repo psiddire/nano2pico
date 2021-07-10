@@ -30,7 +30,6 @@
 #include "prefire_weighter.hpp"
 #include "photon_weighter.hpp"
 #include "event_tools.hpp"
-#include "isr_tools.hpp"
 
 using namespace std;
 
@@ -136,9 +135,6 @@ int main(int argc, char *argv[]){
 
   // Other tools
   EventTools event_tools(in_path, year);
-  int event_type = event_tools.GetEventType();
-
-  ISRTools isr_tools(in_path, year);
 
   // Initialize trees
   nano_tree nano(in_path);
@@ -180,7 +176,6 @@ int main(int argc, char *argv[]){
     pico.out_event()     = nano.event();
     pico.out_lumiblock() = nano.luminosityBlock();
     pico.out_run()       = nano.run();
-    pico.out_type()      = event_type;
     if (isData) pico.out_stitch() = true;
     else event_tools.WriteStitch(nano, pico);
     // number of reconstructed primary vertices
@@ -240,7 +235,6 @@ int main(int argc, char *argv[]){
     pico.out_stitch_dy() = true;
     if (!isData)
 	    mc_producer.WriteGenParticles(nano, pico);
-    isr_tools.WriteISRSystemPt(nano, pico);
 
     if (debug) cout<<"INFO:: Writing jets, MET and ISR vars"<<endl;
     //jet producer uses sys_met_phi, so met_producer must be called first
@@ -254,16 +248,7 @@ int main(int argc, char *argv[]){
       jet_producer.WriteFatJets(nano, pico); // jet_producer.SetVerbose(nano.nSubJet()>0);
       jet_producer.WriteSubJets(nano, pico);
     }
-    isr_tools.WriteISRJetMultiplicity(nano, pico);
 
-    // Copy MET and ME ISR directly from NanoAOD
-    //pico.out_met()         = nano.MET_pt();
-    //pico.out_met_phi()     = nano.MET_phi();
-    //pico.out_met_calo()    = nano.CaloMET_pt();
-    //pico.out_met_tru()     = nano.GenMET_pt();
-    //pico.out_met_tru_phi() = nano.GenMET_phi();
-    //pico.out_ht_isr_me()   = nano.LHE_HTIncoming();
- 
     // calculate mT only for single lepton events
     pico.out_mt() = -999; 
     if (pico.out_nlep()==1) {
@@ -364,8 +349,6 @@ int main(int argc, char *argv[]){
     pico.out_w_pu() = 1.;
     pico.out_sys_pu().resize(2, 1.);
 
-    isr_tools.WriteISRWeights(pico);
-
     // N.B. out_w_prefire should not be renormalized because it models an inefficiency, 
     // i.e. we SHOULD get less events!
     float w_prefire=1.;
@@ -377,8 +360,7 @@ int main(int argc, char *argv[]){
     // do not include w_prefire, or anything that should not be renormalized! Will be set again in Step 3
     pico.out_weight() = pico.out_w_lumi() *
                         w_lep * w_fs_lep * pico.out_w_bhig() *
-                        w_photon  *
-                        pico.out_w_isr() * pico.out_w_pu();
+                        w_photon * pico.out_w_pu();
 
     // ----------------------------------------------------------------------------------------------
     //              *** Add up weights to save for renormalization step ***
@@ -412,7 +394,6 @@ int main(int argc, char *argv[]){
       wgt_sums.out_w_btag_df() += pico.out_w_btag_df();
       wgt_sums.out_w_bhig()    += pico.out_w_bhig();
       wgt_sums.out_w_bhig_df() += pico.out_w_bhig_df();
-      wgt_sums.out_w_isr()     += pico.out_w_isr();
       wgt_sums.out_w_pu()      += pico.out_w_pu();
 
       for(size_t i = 0; i<2; ++i){ 
@@ -420,7 +401,6 @@ int main(int argc, char *argv[]){
         wgt_sums.out_sys_udsghig()[i]    += pico.out_sys_udsghig()[i];
         wgt_sums.out_sys_fs_bchig()[i]   += pico.out_sys_fs_bchig()[i];
         wgt_sums.out_sys_fs_udsghig()[i] += pico.out_sys_fs_udsghig()[i];
-        wgt_sums.out_sys_isr()[i]        += pico.out_sys_isr()[i];
         wgt_sums.out_sys_pu()[i]         += pico.out_sys_pu()[i];
       }
       for(size_t i = 0; i<pico.out_sys_murf().size(); ++i){ 
@@ -456,7 +436,6 @@ void Initialize(corrections_tree &wgt_sums){
   wgt_sums.out_w_btag_df()  = 0.;
   wgt_sums.out_w_bhig()     = 0.;
   wgt_sums.out_w_bhig_df()  = 0.;
-  wgt_sums.out_w_isr()      = 0.;
   wgt_sums.out_w_pu()       = 0.;
   // w_prefire should not be normalized!!
 
@@ -467,7 +446,6 @@ void Initialize(corrections_tree &wgt_sums){
   wgt_sums.out_sys_udsghig().resize(2,0);
   wgt_sums.out_sys_fs_bchig().resize(2,0);
   wgt_sums.out_sys_fs_udsghig().resize(2,0);
-  wgt_sums.out_sys_isr().resize(2,0);
   wgt_sums.out_sys_pu().resize(2,0);
   wgt_sums.out_sys_murf().resize(9,0);
 }

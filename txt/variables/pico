@@ -2,7 +2,7 @@
 int run
 int lumiblock
 Long64_t event
-int type
+
 bool stitch
 bool stitch_ht
 bool stitch_htmet
@@ -128,9 +128,6 @@ vector<float> subfjet_tau4
 vector<int>   subfjet_jet_idx
 
 ###################   ISR related   ##################
-
-int nisr
-
 float jetsys_pt
 float jetsys_eta
 float jetsys_phi
@@ -277,12 +274,6 @@ int ntruel
 int ntrutauh
 int ntrutaul
 
-float isr_tru_pt
-float isr_tru_eta
-float isr_tru_phi
-int mprod
-int mlsp
-
 ################  Weights   ##################
 float weight
 float w_lumi
@@ -293,7 +284,6 @@ float w_btag
 float w_btag_df
 float w_bhig
 float w_bhig_df
-float w_isr
 float w_pu
 float w_prefire
 float eff_trig
@@ -353,74 +343,6 @@ bool HLT_Ele15_IsoVVVL_PFHT450
 bool HLT_Ele15_IsoVVVL_PFHT600
 bool HLT_Ele50_IsoVVVL_PFHT450
 
-# MET triggers
-#------------------------------
-# PFMET120_PFMHT120 is unprescaled for almost all of run2 except a few ifb in 2017
-# unprescaled for part of 2016, so to maximize efficiency for turn on
-bool HLT_PFMET90_PFMHT90_IDTight
-bool HLT_PFMETNoMu90_PFMHTNoMu90_IDTight
-bool HLT_PFMET100_PFMHT100_IDTight
-bool HLT_PFMETNoMu100_PFMHTNoMu100_IDTight
-bool HLT_PFMET110_PFMHT110_IDTight
-bool HLT_PFMETNoMu110_PFMHTNoMu110_IDTight
-bool HLT_PFMET120_PFMHT120_IDTight
-bool HLT_PFMETNoMu120_PFMHTNoMu120_IDTight
-bool HLT_PFMET130_PFMHT130_IDTight
-bool HLT_PFMETNoMu130_PFMHTNoMu130_IDTight
-bool HLT_PFMET140_PFMHT140_IDTight
-bool HLT_PFMETNoMu140_PFMHTNoMu140_IDTight
-bool HLT_PFMET100_PFMHT100_IDTight_PFHT60
-bool HLT_PFMETNoMu100_PFMHTNoMu100_IDTight_PFHT60
-bool HLT_PFMET110_PFMHT110_IDTight_PFHT60
-bool HLT_PFMETNoMu110_PFMHTNoMu110_IDTight_PFHT60
-bool HLT_PFMET120_PFMHT120_IDTight_PFHT60
-bool HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60
-bool HLT_PFMET130_PFMHT130_IDTight_PFHT60
-bool HLT_PFMETNoMu130_PFMHTNoMu130_IDTight_PFHT60
-bool HLT_PFMET140_PFMHT140_IDTight_PFHT60
-bool HLT_PFMETNoMu140_PFMHTNoMu140_IDTight_PFHT60
-bool HLT_PFMET120_PFMHT120_IDTight_HFCleaned
-bool HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_HFCleaned
-bool HLT_PFMET120_PFMHT120_IDTight_PFHT60_HFCleaned
-# experimental MET cross triggers 2017/18
-bool HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1
-bool HLT_PFMET110_PFMHT110_IDTight_CaloBTagCSV_3p1
-bool HLT_PFMET110_PFMHT110_IDTight_CaloBTagDeepCSV_3p1
-
-# Jet trigger 
-#------------------------------
-# unprescaled, reference for 1L trigger eff measurements
-bool HLT_PFJet500
-
-# HT triggers
-#------------------------------
-#for QCD control region
-#---2016---
-bool HLT_PFHT125
-bool HLT_PFHT200
-bool HLT_PFHT300
-bool HLT_PFHT400
-bool HLT_PFHT475
-bool HLT_PFHT600
-bool HLT_PFHT650
-bool HLT_PFHT800
-#unprescaled
-bool HLT_PFHT900
-#---2017/18---
-bool HLT_PFHT180
-bool HLT_PFHT370
-bool HLT_PFHT430
-bool HLT_PFHT510
-bool HLT_PFHT590
-bool HLT_PFHT680
-bool HLT_PFHT780
-bool HLT_PFHT890
-#unprescaled
-bool HLT_PFHT1050
-#---2016/17/18---
-bool HLT_PFHT250
-bool HLT_PFHT350
-
 # ZGamma triggers
 bool HLT_Mu17_Photon30_IsoCaloId
 bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
@@ -447,7 +369,6 @@ vector<float> sys_fs_bchig
 vector<float> sys_fs_udsghig
 
 vector<float> sys_trig
-vector<float> sys_isr
 vector<float> sys_pu
 vector<float> sys_prefire
 

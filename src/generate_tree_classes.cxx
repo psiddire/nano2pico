@@ -158,25 +158,9 @@ int main(){
   WriteNanoHeader(nano_vars);
   WriteNanoSource(nano_vars);
 
-  vector<Variable> baby_vars = GetVariables("baby");  
-  WriteHeader(baby_vars, "baby");
-  WriteSource(baby_vars, "baby");
-
   vector<Variable> pico_vars = GetVariables("pico");  
   WriteHeader(pico_vars, "pico");
   WriteSource(pico_vars, "pico");
-
-  vector<Variable> atto_vars = GetVariables("atto");  
-  WriteHeader(atto_vars, "atto");
-  WriteSource(atto_vars, "atto");
-
-  vector<Variable> higfeats_vars = GetVariables("higfeats");  
-  WriteHeader(higfeats_vars, "higfeats");
-  WriteSource(higfeats_vars, "higfeats");
-
-  vector<Variable> zgfeats_vars = GetVariables("zgfeats");  
-  WriteHeader(zgfeats_vars, "zgfeats");
-  WriteSource(zgfeats_vars, "zgfeats");
 
   vector<Variable> corr_vars = GetVariables("corrections");
   WriteHeader(corr_vars, "corrections");

@@ -14,7 +14,6 @@ float w_btag_df
 float w_bhig
 float w_bhig_df
 
-float w_isr
 float w_pu
 
 vector<float> sys_lep
@@ -25,7 +24,6 @@ vector<float> sys_udsghig
 vector<float> sys_fs_bchig
 vector<float> sys_fs_udsghig
 
-vector<float> sys_isr
 vector<float> sys_pu
 vector<float> sys_murf
 
