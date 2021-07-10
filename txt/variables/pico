@@ -28,14 +28,6 @@ float mt_tru
 float ht_isr_me
 
 ###################   Higgsinos   ##################
-vector<float> hig_cand_dm
-vector<float> hig_cand_am
-vector<float> hig_cand_drmax
-
-vector<float> hig_df_cand_dm
-vector<float> hig_df_cand_am
-vector<float> hig_df_cand_drmax
-
 bool low_dphi_met_e5
 bool low_dphi_mht_e5
 bool low_dphi_met
@@ -97,35 +89,6 @@ vector<float> jet_met_dphi
 vector<bool>  jet_h1d
 vector<bool>  jet_h2d
 vector<int>   jet_fjet_idx
-
-###################   AK8 Jets   ##################
-int nfjet
-
-vector<float> fjet_pt
-vector<float> fjet_eta
-vector<float> fjet_phi
-vector<float> fjet_m
-vector<float> fjet_msoftdrop
-vector<float> fjet_deep_md_hbb_btv
-vector<float> fjet_mva_hbb_btv
-vector<float> fjet_deep_md_hbb_jme
-vector<float> fjet_deep_md_tvsqcd
-vector<float> fjet_deep_tvsqcd
-vector<int>   fjet_subjet_idx1
-vector<int>   fjet_subjet_idx2
-
-int nsubfjet
-vector<float> subfjet_pt
-vector<float> subfjet_eta
-vector<float> subfjet_phi
-vector<float> subfjet_m
-vector<float> subfjet_deepcsv
-vector<float> subfjet_raw_factor
-vector<float> subfjet_tau1
-vector<float> subfjet_tau2
-vector<float> subfjet_tau3
-vector<float> subfjet_tau4
-vector<int>   subfjet_jet_idx
 
 ###################   ISR related   ##################
 float jetsys_pt
@@ -388,6 +351,3 @@ vector<float> sys_met
 vector<float> sys_met_phi
 # vector<float> sys_mt
 # vector<float> sys_mht
-vector<float> sys_hig_cand_am
-vector<float> sys_hig_cand_dm
-vector<float> sys_hig_cand_drmax

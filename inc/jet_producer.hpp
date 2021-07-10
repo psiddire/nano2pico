@@ -1,7 +1,6 @@
 #ifndef H_JET_PRODUCER
 #define H_JET_PRODUCER
 
-#include "hig_producer.hpp"
 #include "nano_tree.hpp"
 #include "pico_tree.hpp"
 
@@ -20,10 +19,7 @@ public:
                              const std::vector<float> &btag_wpts, 
                              const std::vector<float> &btag_df_wpts, 
                              bool isFastsim, 
-                             bool isSignal,
-                             std::vector<HiggsConstructionVariables> &sys_higvars);
-  void WriteFatJets(nano_tree &nano, pico_tree &pico);
-  void WriteSubJets(nano_tree &nano, pico_tree &pico);
+                             bool isSignal);
   void WriteJetSystemPt(nano_tree &nano, pico_tree &pico, 
                               std::vector<int> &sig_jet_nano_idx, const float &btag_wpt, bool isFastsim);
 private:

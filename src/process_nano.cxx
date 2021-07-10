@@ -21,7 +21,6 @@
 #include "photon_producer.hpp"
 #include "jet_producer.hpp"
 #include "met_producer.hpp"
-#include "hig_producer.hpp"
 #include "zgamma_producer.hpp"
 #include "in_json.hpp"
 
@@ -117,7 +116,6 @@ int main(int argc, char *argv[]){
   PhotonProducer photon_producer(year, isData);
   JetProducer jet_producer(year, min_jet_pt, max_jet_eta, isData);
   MetProducer met_producer(year, isData);
-  HigVarProducer hig_producer(year);
   ZGammaVarProducer zgamma_producer(year);
 
   //Initialize scale factor tools
@@ -240,14 +238,9 @@ int main(int argc, char *argv[]){
     //jet producer uses sys_met_phi, so met_producer must be called first
     met_producer.WriteMet(nano, pico, isFastsim, isSignal);
 
-    vector<HiggsConstructionVariables> sys_higvars;
     vector<int> sig_jet_nano_idx = jet_producer.WriteJets(nano, pico, jet_islep_nano_idx, jet_isvlep_nano_idx, jet_isphoton_nano_idx,
-                                                          btag_wpts[year], btag_df_wpts[year], isFastsim, isSignal, sys_higvars);
+                                                          btag_wpts[year], btag_df_wpts[year], isFastsim, isSignal);
     jet_producer.WriteJetSystemPt(nano, pico, sig_jet_nano_idx, btag_wpts[year][1], isFastsim); // usually w.r.t. medium WP
-    if(!isZgamma){
-      jet_producer.WriteFatJets(nano, pico); // jet_producer.SetVerbose(nano.nSubJet()>0);
-      jet_producer.WriteSubJets(nano, pico);
-    }
 
     // calculate mT only for single lepton events
     pico.out_mt() = -999; 
@@ -276,10 +269,6 @@ int main(int argc, char *argv[]){
     // might need as input sig_el_nano_idx, sig_mu_nano_idx, sig_ph_nano_idx
     if(isZgamma)
       zgamma_producer.WriteZGammaVars(nano, pico, sig_jet_nano_idx);
-
-    //save higgs variables using DeepCSV and DeepFlavor
-    hig_producer.WriteHigVars(pico, false, isSignal, sys_higvars);
-    hig_producer.WriteHigVars(pico, true, isSignal, sys_higvars);
 
     if (debug) cout<<"INFO:: Writing filters and triggers"<<endl;
     // N.B. Jets: pico.out_pass_jets() and pico.out_pass_fsjets() filled in jet_producer
