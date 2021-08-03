@@ -16,7 +16,7 @@ public:
   const float ElectronDxyCut     = 0.5;
   const float ElectronDzCut      = 1.0;
 
-  std::vector<int> WriteElectrons(nano_tree &nano, pico_tree &pico, std::vector<int> &jet_islep_nano_idx, std::vector<int> &jet_isvlep_nano_idx, std::vector<int> &sig_el_pico_idx, bool isZgamma, bool isFastsim);
+  std::vector<int> WriteElectrons(nano_tree &nano, pico_tree &pico, std::vector<int> &jet_islep_nano_idx, std::vector<int> &jet_isvlep_nano_idx, std::vector<int> &sig_el_pico_idx, bool isFastsim);
 
 private:
   int year;

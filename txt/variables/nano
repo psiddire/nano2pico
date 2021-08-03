@@ -512,6 +512,7 @@ bool Flag_EcalDeadCellTriggerPrimitiveFilter
 bool Flag_EcalDeadCellBoundaryEnergyFilter
 bool Flag_ecalBadCalibFilter
 bool Flag_ecalBadCalibFilterV2
+bool Flag_hfNoisyHitsFilter
 bool Flag_goodVertices
 bool Flag_eeBadScFilter
 bool Flag_ecalLaserCorrFilter
@@ -520,6 +521,7 @@ bool Flag_chargedHadronTrackResolutionFilter
 bool Flag_muonBadTrackFilter
 bool Flag_BadChargedCandidateFilter
 bool Flag_BadPFMuonFilter
+bool Flag_BadPFMuonDzFilter
 bool Flag_BadChargedCandidateSummer16Filter
 bool Flag_BadPFMuonSummer16Filter
 bool Flag_trkPOG_manystripclus53X
@@ -607,6 +609,7 @@ bool HLT_Ele50_IsoVVVL_PFHT450
 
 # ZGamma triggers
 bool HLT_Mu17_Photon30_IsoCaloId
+bool HLT_Ele23_CaloIdM_TrackIdM_PFJet30
 bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
 bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL

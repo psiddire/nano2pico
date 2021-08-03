@@ -58,16 +58,6 @@ namespace xsec{
         if(file.Contains("WJetsToLNu_HT-1200To2500")) xsec = 1.329*1.224; //XSDB*XSDB K-factor; 1.329*1.2 in Humboldtv3+earlier
         if(file.Contains("WJetsToLNu_HT-2500ToInf"))  xsec = 0.03209*1.224; //XSDB*XSDB K-factor; 0.03216*1.2 in Humboldtv3+earlier
 
-        //updated 02-2019 with XSDB
-        if(file.Contains("QCD_HT100to200_Tune"))   xsec = 28060000;
-        if(file.Contains("QCD_HT200to300_Tune"))   xsec = 1710000;
-        if(file.Contains("QCD_HT300to500_Tune"))   xsec = 347500;
-        if(file.Contains("QCD_HT500to700_Tune"))   xsec = 32060;
-        if(file.Contains("QCD_HT700to1000_Tune"))  xsec = 6829;
-        if(file.Contains("QCD_HT1000to1500_Tune")) xsec = 1207;
-        if(file.Contains("QCD_HT1500to2000_Tune")) xsec = 120.0;
-        if(file.Contains("QCD_HT2000toInf_Tune"))  xsec = 25.25;
-
         // Cross sections from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec
         // multiplied by BF(W->mu,e,tau) = 0.324
         if (file.Contains("ST_s-channel_4f_leptonDecays"))     xsec = 3.365; //from XSDB, 3.4 in Humboldtv3+earlier
@@ -78,25 +68,6 @@ namespace xsec{
 
         if(file.Contains("DYJetsToLL_M-10to50_Tune")) xsec = 18610*1.23;
         if(file.Contains("DYJetsToLL_M-50_Tune"))     xsec = 4895*1.23;
-
-        if(file.Contains("DYJetsToLL_M-50_HT-70to100"))    xsec = 175.3*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-100to200"))   xsec = 139.4*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-200to400"))   xsec = 42.75*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-400to600"))   xsec = 5.497*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-600to800"))   xsec = 1.363*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-800to1200"))  xsec = 0.6759*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-1200to2500")) xsec = 0.116*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-2500toInf"))  xsec = 0.002592*1.23;
-        if(file.Contains("DYJetsToLL_M-50_HT-600toInf"))   xsec = 2.21*1.23;
-
-        if(file.Contains("ZJetsToNuNu_HT-100To200"))       xsec = 280.35*1.2245; //twiki table * XSDB K-factor; 280.35*1.27 in Humboldtv3+earlier
-        if(file.Contains("ZJetsToNuNu_HT-200To400"))       xsec = 77.67*1.2245; // twiki table * XSDB K-factor; 77.67*1.27 in Humboldtv3+earlier
-        if(file.Contains("ZJetsToNuNu_HT-400To600"))       xsec = 10.73*1.2245; // twiki table * XSDB K-factor; 10.73*1.27 in Humboldtv3+earlier
-        if(file.Contains("ZJetsToNuNu_HT-600To800"))       xsec = 2.559*1.2245; // twiki table * XSDB K-factor; 2.536*1.27 in Humboldtv3+earlier
-        if(file.Contains("ZJetsToNuNu_HT-800To1200"))      xsec = 1.796*1.2245; // twiki table * XSDB K-factor; 1.161*1.27 in Humboldtv3+earlier
-        if(file.Contains("ZJetsToNuNu_HT-1200To2500"))     xsec = 0.28833*1.2245; // twiki table * XSDB K-factor; 0.2824*1.27 in Humboldtv3+earlier
-        if(file.Contains("ZJetsToNuNu_HT-2500ToInf"))      xsec = 0.006945*1.2245; // twiki table * XSDB K-factor; 0.006459*1.27 in Humboldtv3+earlier
-        if(file.Contains("ZJetsToNuNu_HT-600ToInf"))       xsec = 3.986*1.2245; // twiki table * XSDB K-factor; 3.986*1.27 in Humboldtv3+earlier
 
         if(file.Contains("TTZToQQ"))                       xsec = 0.5297; //XSDB
         if(file.Contains("TTZToLLNuNu_M-10"))              xsec = 0.2529; //XSDB
@@ -119,11 +90,6 @@ namespace xsec{
         // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV
         // Higgs branching ratios from
         // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR
-        if(file.Contains("ZH_HToBB_ZToLL_M-125"))   xsec = 0.883*Htobb*0.033658;
-        if(file.Contains("ZH_HToBB_ZToNuNu_M-125")) xsec = 0.883*Htobb*0.2;
-        if(file.Contains("WH_HToBB_WToLNu_M-125"))  xsec = 1.373*Htobb*(0.1071+0.1063+0.1138);
-        if(file.Contains("ZH_HToBB_ZToNuNu_M125"))  xsec = 0.883*Htobb*0.2;
-        if(file.Contains("WH_HToBB_WToLNu_M125"))   xsec = 1.373*Htobb*(0.1071+0.1063+0.1138);
 
         // Zgamma cross sections at 13 TeV
         // https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns
@@ -223,36 +189,6 @@ namespace xsec{
 	  else  xsec = 0.008060*1.164*4.200; //GenXSecAnalyzer * XSDB K-Factor * Correction 3.94174e-07*20508.9*3 in Humboldtv3+earlier
 	}
 
-        if(file.Contains("QCD_HT100to200_Tune")) xsec = 23700000;
-        if(file.Contains("QCD_HT200to300_Tune")) {
-	  if (year==2017) xsec = 1546000; //XSDB (LO)
-	  else xsec=1557000; //XSDB (LO), 1546000 in Humboldtv3+earlier
-	}	
-        if(file.Contains("QCD_HT300to500_Tune")) {
-	  if (year==2017) xsec = 322600; //XSDB (LO)
-	  else xsec=323400; //XSDB (LO), 323400 in Humboldtv3+earlier
-	}	
-        if(file.Contains("QCD_HT500to700_Tune")) {
-	  if (year==2017) xsec = 29980; //XSDB (LO)
-	  else xsec=30140; //XSDB (LO), 30140 in Humboldtv3+earlier
-	}	
-        if(file.Contains("QCD_HT700to1000_Tune")) {
-	  if (year==2017) xsec = 6334; //XSDB (LO)
-	  else xsec=6310; //XSDB (LO), 6310 in Humboldtv3+earlier
-	}	
-        if(file.Contains("QCD_HT1000to1500_Tune")) {
-	  if (year==2017) xsec = 1088; //XSDB (LO)
-	  else xsec=1094; //XSDB (LO), 1094 in Humboldtv3+earlier
-	}	
-        if(file.Contains("QCD_HT1500to2000_Tune")) {
-	  if (year==2017) xsec = 99.11; //XSDB (LO)
-	  else xsec=99.38; //XSDB (LO), 99.38 in Humboldtv3+earlier
-	}	
-        if(file.Contains("QCD_HT2000toInf_Tune")) {
-	  if (year==2017) xsec = 20.23; //XSDB (LO)
-	  else xsec=20.20; //XSDB (LO), 20.23 in Humboldtv3+earlier
-	}	
-
         // Cross sections from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec
         // multiplied by BF(W->mu,e,tau) = 0.324
         if (file.Contains("ST_s-channel_4f_leptonDecays"))     xsec = 3.74; //GenXSecAnalyzer, 3.34 in Humboldtv3+earlier
@@ -270,45 +206,6 @@ namespace xsec{
         if (file.Contains("ST_tW_top_5f_NoFullyHadronicDecays"))     xsec = 34.91*0.530775; //XSDB/GenXSecAnalyzer * PDG BR; 35.85*0.543 in Humboldtv3+earlier
 
         if(file.Contains("DYJetsToLL_M-50_Tune"))     xsec = 2075.14*3;
-
-        if(file.Contains("DYJetsToLL_M-50_HT-70to100"))    xsec = 0.0275032*2075.14*3;
-        if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 0.0302083*2075.14*3;
-        if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 0.00907651*2075.14*3;
-        if(file.Contains("DYJetsToLL_M-50_HT-400to600"))    xsec = 0.00129238*2075.14*3;
-        if(file.Contains("DYJetsToLL_M-50_HT-600to800"))    xsec = 0.000316039*2075.14*3;
-        if(file.Contains("DYJetsToLL_M-50_HT-800to1200"))    xsec = 0.000137432*2075.14*3;
-        if(file.Contains("DYJetsToLL_M-50_HT-1200to2500"))    xsec = 3.09368e-05*2075.14*3;
-        if(file.Contains("DYJetsToLL_M-50_HT-2500toInf"))    xsec = 4.39860e-07*2075.14*3;
-
-        // k-factor from DYJets 1.165
-        if(file.Contains("ZJetsToNuNu_HT-100To200")) {
-	  if (year==2017)  xsec = 302.8*1.1374*0.994; //XSDB * XSDB K-Factor * Correction 302.8*1.165 in Humboldtv3+earlier
-	  else  xsec = 304.0*1.1421*0.994; //GenXSecAnalyzer * XSDB K-Factor * Correction 302.8*1.165 in Humboldtv3+earlier
-	}
-        if(file.Contains("ZJetsToNuNu_HT-200To400")) {
-	  if (year==2017)  xsec = 92.59*1.1374*0.981; //XSDB * XSDB K-Factor * Correction 92.59*1.165 in Humboldtv3+earlier
-	  else  xsec = 91.68*1.1421*0.981; //GenXSecAnalyzer * XSDB K-Factor * Correction 92.59*1.165 in Humboldtv3+earlier
-	}
-        if(file.Contains("ZJetsToNuNu_HT-400To600")) {
-	  if (year==2017)  xsec = 13.18*1.1374*0.977; //XSDB * XSDB K-Factor * Correction 13.18*1.165 in Humboldtv3+earlier
-	  else  xsec = 13.11*1.1421*0.977; //GenXSecAnalyzer * XSDB K-Factor * Correction 13.18*1.165 in Humboldtv3+earlier
-	}
-        if(file.Contains("ZJetsToNuNu_HT-600To800")) {
-	  if (year==2017)  xsec = 3.257*1.1374*0.975; //XSDB * XSDB K-Factor * Correction 3.257*1.165 in Humboldtv3+earlier
-	  else  xsec = 3.245*1.1421*0.975; //GenXSecAnalyzer * XSDB K-Factor * Correction 3.257*1.165 in Humboldtv3+earlier
-	}
-        if(file.Contains("ZJetsToNuNu_HT-800To1200")) {
-	  if (year==2017)  xsec = 1.49*1.1374*0.916; //XSDB * XSDB K-Factor * Correction 1.49*1.165 in Humboldtv3+earlier
-	  else  xsec = 1.497*1.1421*0.916; //GenXSecAnalyzer * XSDB K-Factor * Correction 1.49*1.165 in Humboldtv3+earlier
-	}
-        if(file.Contains("ZJetsToNuNu_HT-1200To2500")) {
-	  if (year==2017)  xsec = 0.3419*1.1374*0.880; //XSDB * XSDB K-Factor * Correction 0.3419*1.165 in Humboldtv3+earlier
-	  else  xsec = 0.3425*1.1421*0.880; //GenXSecAnalyzer * XSDB K-Factor * Correction 0.3419*1.165 in Humboldtv3+earlier
-	}
-        if(file.Contains("ZJetsToNuNu_HT-2500ToInf")) {
-	  if (year==2017)  xsec = 0.005146*1.1374*1.276; //XSDB * XSDB K-Factor * Correction 0.3419*1.165 in Humboldtv3+earlier
-	  else  xsec = 0.005263*1.1421*1.276; //GenXSecAnalyzer * XSDB K-Factor * Correction 0.005146*1.165 in Humboldtv3+earlier
-	}
 
         if(file.Contains("TTZToQQ"))                xsec = 0.5104; //XSDB/GenXSecAnalyzer
         if(file.Contains("TTZToLLNuNu_M-10"))       xsec = 0.2432; //XSDB/GenXSecAnalyzer
@@ -337,12 +234,6 @@ namespace xsec{
         // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV
         // Higgs branching ratios from
         // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR
-        if(file.Contains("ZH_HToBB_ZToLL_M-125"))      xsec = 0.883*Htobb*0.033658;
-        if(file.Contains("ZH_HToBB_ZToNuNu_M-125"))    xsec = 0.883*Htobb*0.2;
-        if(file.Contains("WH_HToBB_WToLNu_M-125"))     xsec = 1.373*Htobb*(0.1071+0.1063+0.1138);
-        if(file.Contains("ZH_HToBB_ZToNuNu_M125"))    xsec = 0.883*Htobb*0.2;
-        if(file.Contains("WHiggs0PMToBB"))     xsec = 1.373*Htobb*(0.1071+0.1063+0.1138); //using same as 2016
-
     }
     if(xsec<=0) std::cout<<"ERROR:: Cross section not found for "<<file<<std::endl;
 

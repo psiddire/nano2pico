@@ -84,47 +84,73 @@ void ZGammaVarProducer::WriteZGammaVars(nano_tree &nano, pico_tree &pico, vector
         }
 
 	// Variables used for defining kinematic angles presented in https://arxiv.org/pdf/1108.2274.pdf
-	TVector3 l1 = lminus.Vect(), l2 = lplus.Vect(), Z = dilep.Vect();
-	double M = llg.M(), mll = dilep.M();
-	double lZ = sqrt(pow(llg.Dot(dilep)/M,2)-pow(mll,2));
-	TLorentzVector q1, q2;
-	TVector3 hTransverseBoost = llg.BoostVector();
-	hTransverseBoost.SetZ(0);
-	TLorentzVector hZ = llg;
-	hZ.Boost(-1*hTransverseBoost);
-	double hPz = hZ.Pz(), hE = hZ.E();
-	
-	// 4-momenta of q1/q2 (quarks from gluon-gluon fusion)
-	//  Defined in Equation 4/5
-	q1.SetPxPyPzE(0,0,(hPz+hE)/2,(hE+hPz)/2);
-	q2.SetPxPyPzE(0,0,(hPz-hE)/2,(hE-hPz)/2);
-	q1.Boost(hTransverseBoost);
-	q2.Boost(hTransverseBoost);
-	TVector3 q1vec = q1.Vect();
-	
-	// Cosine of angle between lepton 1 and parent Z in Higgs frame 
-	//  Defined in Equation 13
+        double M = llg.M(), mll = dilep.M();
+        double lZ = sqrt(pow(llg.Dot(dilep)/M,2)-pow(mll,2));
+	TVector3 hBoost = llg.BoostVector();
+
+        // Cosine of angle between lepton 1 and parent Z
 	double costheta = llg.Dot(lminus-lplus)/(M*lZ);
 	pico.out_llphoton_costheta().push_back(costheta);
-	
-	// Cosine of angle between incoming quarks and outgoing Zs in higgs frame 
-	//  Defined in Equation 8
-	double cosTheta = dilep.Dot(q1-q2)/(M*lZ);
+
+	// 4-momenta of q1/q2 (quarks from gluon-gluon fusion)
+        TLorentzVector q, qBar;
+        TVector3 hTransverseBoost = llg.BoostVector();
+        hTransverseBoost.SetZ(0);
+        TLorentzVector hH = llg;
+        hH.Boost(-1*hTransverseBoost);
+        double hPz = hH.Pz(), hE = hH.E();
+        q.SetPxPyPzE(0,0,(hPz+hE)/2,(hE+hPz)/2);
+        qBar.SetPxPyPzE(0,0,(hPz-hE)/2,(hE-hPz)/2);
+        q.Boost(hTransverseBoost);
+        qBar.Boost(hTransverseBoost);
+
+        // Cosine of angle between incoming quarks and outgoing Zs in Higgs frame
+	double cosTheta = (qBar-q).Dot(dilep)/(M*lZ);
+	double sinTheta = sqrt(1 - pow(cosTheta, 2));
 	pico.out_llphoton_cosTheta().push_back(cosTheta);
-	
-	// Angle of the Z decay plane from the z-axis (defined in Equation 1) in the higgs frame
-	//  Defined in Equation 21+22 (it's called phi in the paper, but psi is
-	//  used here to distinguish it from the detector angle phi)
-	double cospsi = -1*l1.Cross(l2).Dot(q1vec.Cross(Z))/l1.Cross(l2).Mag()/q1vec.Cross(Z).Mag();
-	double sinpsi = -1*l1.Cross(l2).Dot(q1vec)/l1.Cross(l2).Mag()/q1vec.Mag();
+
+        // Angle phi
+        dilep.Boost(-1*hBoost);
+	TVector3 zBoost = dilep.BoostVector();
+	q.Boost(-1*hBoost);
+        lminus.Boost(-1*hBoost);
+        lplus.Boost(-1*hBoost);
+        TVector3 l1 = lminus.Vect(), l2 = lplus.Vect(), Z = dilep.Vect();
+	TVector3 qvec = q.Vect();
+	double cospsi = -1*l1.Cross(l2).Dot(qvec.Cross(Z))/l1.Cross(l2).Mag()/qvec.Cross(Z).Mag();
+	double sinpsi = -1*l1.Cross(l2).Dot(qvec)/l1.Cross(l2).Mag()/qvec.Mag()/sinTheta;
+	if (cospsi > 1) cospsi = 1;
+	else if (cospsi < -1) cospsi = -1;
 	double psi(0);
-	if(cospsi > 1) cospsi = 1;
-	if(cospsi < -1) cospsi = -1;
-	if(sinpsi < 0) psi = -1*acos(cospsi);
-	else           psi = acos(cospsi);
-	pico.out_llphoton_psi().push_back(psi);
-	
-	pico.out_llphoton_costhj().push_back(cosThetaJeff(lminus,lplus,photon));
+        if(sinpsi < 0) psi = -1*acos(cospsi);
+        else           psi = acos(cospsi);
+        pico.out_llphoton_psi().push_back(psi);
+
+
+	// // Cosine of angle between incoming quarks and outgoing Zs in Higgs frame (Alternate formulation)
+        // double cosThetaT = cos(dilep.Angle(q.Vect()));
+
+	// // Angle phi (Alternate formulation)
+        // TVector3 zAxis = dilep.Vect().Unit();
+        // TVector3 yAxis = qvec.Cross(zAxis.Unit()).Unit();
+        // TVector3 xAxis = (yAxis.Unit().Cross(zAxis.Unit())).Unit();
+        // TRotation rotation;
+        // rotation = rotation.RotateAxes(xAxis,yAxis,zAxis).Inverse();
+        // lminus.Transform(rotation);
+        // double psiT = lminus.Phi();
+
+	// // Cosine of angle between lepton 1 and parent Z (Alternate formulation)
+        // lminus.Boost(-1*zBoost);
+	// lplus.Boost(-1*zBoost);
+	// double costhetaT = cos(dilep.Angle(lplus.Vect()));
+
+
+	// cout << "Phi: " << psi << " " << psiT << endl;
+	// cout << "costheta: " << costheta << " " << costhetaT << endl;
+	// cout << "cosTheta: " << cosTheta << " " << cosThetaT << endl;
+
+        pico.out_llphoton_costhj().push_back(cosThetaJeff(lminus,lplus,photon));
+
       }
     }
   return;

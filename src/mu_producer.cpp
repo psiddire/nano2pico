@@ -12,7 +12,7 @@ MuonProducer::MuonProducer(int year_, bool isData_){
 MuonProducer::~MuonProducer(){
 }
 
-vector<int> MuonProducer::WriteMuons(nano_tree &nano, pico_tree &pico, vector<int> &jet_islep_nano_idx, vector<int> &jet_isvlep_nano_idx, vector<int> &sig_mu_pico_idx, bool isZgamma, bool isFastsim){
+vector<int> MuonProducer::WriteMuons(nano_tree &nano, pico_tree &pico, vector<int> &jet_islep_nano_idx, vector<int> &jet_isvlep_nano_idx, vector<int> &sig_mu_pico_idx, bool isFastsim){
   vector<float> Jet_pt, Jet_mass;
   getJetWithJEC(nano, isFastsim, Jet_pt, Jet_mass);
 

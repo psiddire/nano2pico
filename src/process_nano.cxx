@@ -93,7 +93,7 @@ int main(int argc, char *argv[]){
   time(&begtime);
 
   // jet requirements
-  if(isZgamma) max_jet_eta  =  4.7;
+  max_jet_eta = 4.7;
 
   // B-tag working points
   map<int, vector<float>> btag_wpts{
@@ -126,10 +126,10 @@ int main(int argc, char *argv[]){
   //BTagWeighter btag_df_weighter(year, false, true, btag_df_wpts[year]);
   BTagWeighter btag_weighter(year, isFastsim, false, btag_wpts[year]);
   BTagWeighter btag_df_weighter(year, isFastsim, true, btag_df_wpts[year]);
-  LeptonWeighter lep_weighter(year, isZgamma);
-  LeptonWeighter lep_weighter16gh(year, isZgamma, true);
+  LeptonWeighter lep_weighter(year);
+  LeptonWeighter lep_weighter16gh(year, true);
   PrefireWeighter prefire_weighter(year, true);
-  PhotonWeighter photon_weighter(year, isZgamma);
+  PhotonWeighter photon_weighter(year);
 
   // Other tools
   EventTools event_tools(in_path, year);
@@ -139,7 +139,6 @@ int main(int argc, char *argv[]){
   size_t nentries(nent_test>0 ? nent_test : nano.GetEntries());
   cout << "Nano file: " << in_path << endl;
   cout << "Input number of events: " << nentries << endl;
-  // cout << "Running on "<< (isFastsim ? "FastSim" : "FullSim") << endl;
   // cout << "Calculating weights based on " << year << " scale factors." << endl;
 
   pico_tree pico("", out_path);
@@ -164,7 +163,7 @@ int main(int argc, char *argv[]){
       }
     }
 
-    bool passed_trig = event_tools.SaveTriggerDecisions(nano, pico, isZgamma);
+    bool passed_trig = event_tools.SaveTriggerDecisions(nano, pico);
     //cout<<"Passed Trigger: "<<passed_trig<<endl;
     if (isData && !passed_trig) {
       continue;
@@ -196,8 +195,8 @@ int main(int argc, char *argv[]){
     pico.out_nlep() = 0; pico.out_nvlep() = 0; // filled by lepton producers
     vector<int> sig_el_pico_idx = vector<int>();
     vector<int> sig_mu_pico_idx = vector<int>();
-    vector<int> sig_el_nano_idx = el_producer.WriteElectrons(nano, pico, jet_islep_nano_idx, jet_isvlep_nano_idx, sig_el_pico_idx, isZgamma, isFastsim);
-    vector<int> sig_mu_nano_idx = mu_producer.WriteMuons(nano, pico, jet_islep_nano_idx, jet_isvlep_nano_idx, sig_mu_pico_idx, isZgamma, isFastsim);
+    vector<int> sig_el_nano_idx = el_producer.WriteElectrons(nano, pico, jet_islep_nano_idx, jet_isvlep_nano_idx, sig_el_pico_idx, isFastsim);
+    vector<int> sig_mu_nano_idx = mu_producer.WriteMuons(nano, pico, jet_islep_nano_idx, jet_isvlep_nano_idx, sig_mu_pico_idx, isFastsim);
 
     // save a separate vector with just signal leptons ordered by pt
     struct SignalLepton{ float pt; float eta; float phi; int pdgid;};
@@ -220,8 +219,7 @@ int main(int argc, char *argv[]){
 
     if (debug) cout<<"INFO:: Before Signal Photon Nano"<<endl;
     vector<int> jet_isphoton_nano_idx = vector<int>();
-    if(isZgamma) 
-      vector<int> sig_ph_nano_idx = photon_producer.WritePhotons(nano, pico, jet_isphoton_nano_idx, sig_el_nano_idx, sig_mu_nano_idx);
+    vector<int> sig_ph_nano_idx = photon_producer.WritePhotons(nano, pico, jet_isphoton_nano_idx, sig_el_nano_idx, sig_mu_nano_idx);
     if (debug) cout<<"INFO:: After Signal Photon Nano"<<endl;
 
     tk_producer.WriteIsoTracks(nano, pico, sig_el_nano_idx, sig_mu_nano_idx, isFastsim);
@@ -267,14 +265,12 @@ int main(int argc, char *argv[]){
 
     if (debug) cout<<"INFO:: Writing analysis specific variables"<<endl;
     // might need as input sig_el_nano_idx, sig_mu_nano_idx, sig_ph_nano_idx
-    if(isZgamma)
-      zgamma_producer.WriteZGammaVars(nano, pico, sig_jet_nano_idx);
+    zgamma_producer.WriteZGammaVars(nano, pico, sig_jet_nano_idx);
 
     if (debug) cout<<"INFO:: Writing filters and triggers"<<endl;
     // N.B. Jets: pico.out_pass_jets() and pico.out_pass_fsjets() filled in jet_producer
     event_tools.WriteDataQualityFilters(nano, pico, sig_jet_nano_idx, min_jet_pt, isData, isFastsim);
 
-    event_tools.WriteTriggerEfficiency(pico);
 
     // ----------------------------------------------------------------------------------------------
     //              *** Calculating weight branches ***
@@ -293,7 +289,6 @@ int main(int argc, char *argv[]){
     else if (!isData) {
       lep_weighter.FullSim(pico, w_lep, sys_lep);
     }
-    if(isFastsim) lep_weighter.FastSim(pico, w_fs_lep, sys_fs_lep);
     pico.out_w_lep()      = w_lep;
     pico.out_w_fs_lep()   = w_fs_lep;
     pico.out_sys_lep()    = sys_lep; 

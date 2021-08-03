@@ -1,3 +1,2 @@
-DYJetsToLL_0J*.root
-DYJetsToLL_1J*.root
-DYJetsToLL_2J*.root
+DYJetsToLL_M-50*.root
+
