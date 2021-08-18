@@ -136,6 +136,7 @@ bool EventTools::SaveTriggerDecisions(nano_tree& nano, pico_tree& pico){
   // ZGamma triggers
   pico.out_HLT_Mu17_Photon30_IsoCaloId()               = nano.HLT_Mu17_Photon30_IsoCaloId();
   pico.out_HLT_Ele23_CaloIdM_TrackIdM_PFJet30()        = nano.HLT_Ele23_CaloIdM_TrackIdM_PFJet30();
+  pico.out_HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30()  = nano.HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30();
   pico.out_HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ() = nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ();
   pico.out_HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL()    = nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL();
   pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL()          = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL();
@@ -144,8 +145,17 @@ bool EventTools::SaveTriggerDecisions(nano_tree& nano, pico_tree& pico){
   pico.out_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ()     = nano.HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ();
   pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8() = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8();
   pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8()   = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8();
+  pico.out_HLT_TriplePhoton_20_20_20_CaloIdLV2_R9IdVL()  = nano.HLT_TriplePhoton_20_20_20_CaloIdLV2_R9IdVL();
+  pico.out_HLT_TriplePhoton_20_20_20_CaloIdLV2()         = nano.HLT_TriplePhoton_20_20_20_CaloIdLV2();
+  pico.out_HLT_TriplePhoton_30_30_10_CaloIdLV2_R9IdVL()  = nano.HLT_TriplePhoton_30_30_10_CaloIdLV2_R9IdVL();
+  pico.out_HLT_TriplePhoton_30_30_10_CaloIdLV2()         = nano.HLT_TriplePhoton_30_30_10_CaloIdLV2();
+  pico.out_HLT_TriplePhoton_35_35_5_CaloIdLV2_R9IdVL()   = nano.HLT_TriplePhoton_35_35_5_CaloIdLV2_R9IdVL();
 
-  bool egamma_trigs = nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ() || nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL();
+  bool egamma_trigs = nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ() || nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL() || 
+                      nano.HLT_Ele23_CaloIdM_TrackIdM_PFJet30() || nano.HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30() ||
+                      nano.HLT_TriplePhoton_20_20_20_CaloIdLV2_R9IdVL() || nano.HLT_TriplePhoton_20_20_20_CaloIdLV2() ||
+                      nano.HLT_TriplePhoton_30_30_10_CaloIdLV2_R9IdVL() || nano.HLT_TriplePhoton_30_30_10_CaloIdLV2() || 
+                      nano.HLT_TriplePhoton_35_35_5_CaloIdLV2_R9IdVL();
 
   bool muon_trigs = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL() || nano.HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL() ||
                     nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ() || nano.HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ() ||

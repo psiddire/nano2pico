@@ -33,9 +33,6 @@ void Normalize(vector<T> &v, double nent){
 
 void Initialize(corrections_tree &wgt_sums, corrections_tree &corr);
 void AddEntry(corrections_tree &wgt_sums, corrections_tree &corr);
-int GetHiggsinoMass(const string &path);
-int GetGluinoMass(const string &path);
-int GetSUSYMass(const string & patth, const string & tag);
 void FixLumi(corrections_tree &corr, const string &corr_path, int year);
 void Normalize(corrections_tree &corr);
 void Fix0L(corrections_tree &corr);
@@ -55,7 +52,7 @@ int main(int argc, char *argv[]){
   string output_path = argv[optind];
   vector<string> input_paths(argv+optind+1, argv+argc);
 
-  int year = Contains(input_paths[0], "RunIISummer20UL16") ? 2016 : (Contains(input_paths[0], "RunIISummer20UL17") ? 2017 : 2018);
+  int year = Contains(input_paths[0], "UL16") ? 2016 : (Contains(input_paths[0], "UL17") ? 2017 : 2018);
   cout << "Running with settings for year = "<<year<<"."<<endl; 
 
   corrections_tree corr("", output_path.c_str());
@@ -92,10 +89,6 @@ void Initialize(corrections_tree &wgt_sums, corrections_tree &corr){
   corr.out_w_lumi() = 0.;
   corr.out_w_lep() = 0.;
   corr.out_w_fs_lep() = 0.;
-  corr.out_w_btag() = 0.;
-  corr.out_w_btag_df() = 0.;
-  corr.out_w_bhig() = 0.;
-  corr.out_w_bhig_df() = 0.;
   corr.out_w_pu() = 0.;
   // w_prefire should not be normalized!!
 
@@ -107,11 +100,6 @@ void Initialize(corrections_tree &wgt_sums, corrections_tree &corr){
 
   CopySize(wgt_sums.sys_lep(),                corr.out_sys_lep());
   CopySize(wgt_sums.sys_fs_lep(),             corr.out_sys_fs_lep());
-  CopySize(wgt_sums.sys_bchig(),              corr.out_sys_bchig());
-  CopySize(wgt_sums.sys_udsghig(),            corr.out_sys_udsghig());
-  CopySize(wgt_sums.sys_fs_bchig(),           corr.out_sys_fs_bchig());
-  CopySize(wgt_sums.sys_fs_udsghig(),         corr.out_sys_fs_udsghig());
-
   CopySize(wgt_sums.sys_pu(),                 corr.out_sys_pu());
   CopySize(wgt_sums.sys_murf(),               corr.out_sys_murf());
   // CopySize(wgt_sums.w_pdf(),                  corr.out_w_pdf());
@@ -120,81 +108,32 @@ void Initialize(corrections_tree &wgt_sums, corrections_tree &corr){
 
 
 void AddEntry(corrections_tree &wgt_sums, corrections_tree &corr){
-  corr.out_neff() += wgt_sums.neff();
-  corr.out_nent() += wgt_sums.nent();
-  corr.out_nent_zlep() += wgt_sums.nent_zlep();
+  corr.out_neff()          += wgt_sums.neff();
+  corr.out_nent()          += wgt_sums.nent();
+  corr.out_nent_zlep()     += wgt_sums.nent_zlep();
   corr.out_tot_weight_l0() += wgt_sums.tot_weight_l0();
   corr.out_tot_weight_l1() += wgt_sums.tot_weight_l1();
 
-  corr.out_weight()            += wgt_sums.weight();
-  corr.out_w_lep()             += wgt_sums.w_lep();
-  corr.out_w_fs_lep()          += wgt_sums.w_fs_lep();
-  corr.out_w_bhig()            += wgt_sums.w_bhig();
-  corr.out_w_btag()            += wgt_sums.w_btag();
-  corr.out_w_bhig_df()         += wgt_sums.w_bhig_df();
-  corr.out_w_btag_df()         += wgt_sums.w_btag_df();
-  corr.out_w_pu()              += wgt_sums.w_pu();
+  corr.out_weight()        += wgt_sums.weight();
+  corr.out_w_lep()         += wgt_sums.w_lep();
+  corr.out_w_fs_lep()      += wgt_sums.w_fs_lep();
+  corr.out_w_pu()          += wgt_sums.w_pu();
 
   VecAdd(wgt_sums.sys_lep(),           corr.out_sys_lep());
   VecAdd(wgt_sums.sys_fs_lep(),        corr.out_sys_fs_lep());
-  VecAdd(wgt_sums.sys_bchig(),         corr.out_sys_bchig());
-  VecAdd(wgt_sums.sys_udsghig(),       corr.out_sys_udsghig());
-  VecAdd(wgt_sums.sys_fs_bchig(),      corr.out_sys_fs_bchig());
-  VecAdd(wgt_sums.sys_fs_udsghig(),    corr.out_sys_fs_udsghig());
   VecAdd(wgt_sums.sys_pu(),            corr.out_sys_pu());
   VecAdd(wgt_sums.sys_murf(),          corr.out_sys_murf());
   // VecAdd(wgt_sums.w_pdf(),             corr.out_w_pdf());
   // VecAdd(wgt_sums.sys_pdf(),           corr.out_sys_pdf());
 }
 
-int GetHiggsinoMass(const string &path){
-  string key = "_mChi-";
-  // if (Contains(path, "T2tt")) key = "_mStop-"; 
-  auto pos1 = path.rfind(key)+key.size();
-  auto pos2 = path.find("_", pos1);
-  string mass_string = path.substr(pos1, pos2-pos1);
-  int unrounded_mass = stoi(mass_string);
-  int rounded_mass = unrounded_mass;
-  if (unrounded_mass != 127)
-    rounded_mass = ((unrounded_mass+12)/25)*25;
-  return rounded_mass;
-}
-
-// Tag examples: "_mChi-","-mGluino-" 
-int GetSUSYMass(const string & path, const string & tag) {
-  auto pos1 = path.rfind(tag)+tag.size();
-  auto pos2 = path.find("_", pos1);
-  string mass_string = path.substr(pos1, pos2-pos1);
-  int unrounded_mass = stoi(mass_string);
-  return unrounded_mass;
-}
-
-int GetGluinoMass(const string & path) {
-  return GetSUSYMass(path, "-mGluino-");
-}
 
 void FixLumi(corrections_tree &corr, const string &corr_path, int year){
   double xsec(0.); const float lumi = 1000.;
-  if (Contains(corr_path, "SMS-TChi")){
-    double exsec(0.);
-    int mglu = GetHiggsinoMass(corr_path);
-    xsec::higgsinoCrossSection(mglu, xsec, exsec);
-  } else if (Contains(corr_path, "SMS-T5qqqqZH_HToBB")) {
-    double exsec(0.);
-    int mglu = GetGluinoMass(corr_path);
-    xsec::gluinoCrossSection(mglu, xsec, exsec);
-    xsec = xsec * .5824*.5824; // Add in H to bb branch ratio
-    exsec = exsec * .5824*.5824; // Add in H to bb branch ratio
-  } else if (Contains(corr_path, "SMS-T5qqqqZH-")) {
-    double exsec(0.);
-    int mglu = GetGluinoMass(corr_path);
-    xsec::gluinoCrossSection(mglu, xsec, exsec);
-  }else{
-    xsec = xsec::crossSection(corr_path, year);  
-  }
-
+  xsec = xsec::crossSection(corr_path, year);  
   corr.out_w_lumi() = xsec*lumi/corr.out_neff();
 }
+
 
 void Fix0L(corrections_tree &corr){
   double nent = corr.out_nent();
@@ -213,23 +152,16 @@ void Fix0L(corrections_tree &corr){
 }
 
 
-
 void Normalize(corrections_tree &corr){
   double nent = corr.out_nent();
 
   // w_lep fixed in Fix0L
 
-  Normalize(corr.out_w_btag(), nent);
-  Normalize(corr.out_w_btag_df(), nent);
-  Normalize(corr.out_w_bhig(), nent);
-  Normalize(corr.out_w_bhig_df(), nent);
+  Normalize(corr.out_weight(), nent);
+  Normalize(corr.out_w_lumi(), nent);
 
   Normalize(corr.out_w_pu(), nent);
 
-  Normalize(corr.out_sys_bchig(), nent);
-  Normalize(corr.out_sys_udsghig(), nent);
-  Normalize(corr.out_sys_fs_bchig(), nent);
-  Normalize(corr.out_sys_fs_udsghig(), nent);
   Normalize(corr.out_sys_pu(), nent);
 
   Normalize(corr.out_sys_murf(), nent);

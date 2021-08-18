@@ -238,10 +238,6 @@ float w_lumi
 float w_lep
 float w_fs_lep
 float w_photon
-float w_btag
-float w_btag_df
-float w_bhig
-float w_bhig_df
 float w_pu
 float w_prefire
 
@@ -303,6 +299,7 @@ bool HLT_Ele50_IsoVVVL_PFHT450
 # ZGamma triggers
 bool HLT_Mu17_Photon30_IsoCaloId
 bool HLT_Ele23_CaloIdM_TrackIdM_PFJet30
+bool HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30
 bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
 bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL
@@ -312,36 +309,18 @@ bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8
 bool HLT_Photon175
+bool HLT_TriplePhoton_20_20_20_CaloIdLV2_R9IdVL
+bool HLT_TriplePhoton_20_20_20_CaloIdLV2
+bool HLT_TriplePhoton_30_30_10_CaloIdLV2_R9IdVL
+bool HLT_TriplePhoton_30_30_10_CaloIdLV2
+bool HLT_TriplePhoton_35_35_5_CaloIdLV2_R9IdVL
 
 ################  Systematic variations  - to be implemented as needed  ##################
 
 # +/- variations are index 0 and 1
 vector<float> sys_lep
 vector<float> sys_fs_lep
-
 vector<float> sys_photon
-
-vector<float> sys_bchig
-vector<float> sys_udsghig
-vector<float> sys_fs_bchig
-vector<float> sys_fs_udsghig
-
 vector<float> sys_pu
 vector<float> sys_prefire
-
 vector<float> sys_murf
-
-# variations have index 0 (JER smearing up), 1 (JER smearing down), 2 (JEC up) and 3 (JEC down)
-vector<float> sys_ht
-vector<int>   sys_njet
-vector<int>   sys_nbl
-vector<int>   sys_nbm
-vector<int>   sys_nbt
-vector<bool>  sys_low_dphi_met
-# vector<int>   sys_nbdl
-# vector<int>   sys_nbdm
-# vector<int>   sys_nbdt
-vector<float> sys_met
-vector<float> sys_met_phi
-# vector<float> sys_mt
-# vector<float> sys_mht

@@ -60,7 +60,6 @@ int main(int argc, char *argv[]){
 
   bool isData = Contains(in_file, "Run201") ? true : false;
   bool isFastsim = Contains(in_file, "Fast") ? true : false;
-  bool isSignal = Contains(in_file, "TChiHH") ? true : false;
   int year = Contains(in_file, "RunIISummer16") ? 2016 : (Contains(in_file, "RunIIFall17") ? 2017 : 2018);
   if (isData) {
     year = Contains(in_file, "Run2016") ? 2016 : (Contains(in_file, "Run2017") ? 2017 : 2018);
@@ -234,10 +233,10 @@ int main(int argc, char *argv[]){
 
     if (debug) cout<<"INFO:: Writing jets, MET and ISR vars"<<endl;
     //jet producer uses sys_met_phi, so met_producer must be called first
-    met_producer.WriteMet(nano, pico, isFastsim, isSignal);
+    met_producer.WriteMet(nano, pico, isFastsim);
 
     vector<int> sig_jet_nano_idx = jet_producer.WriteJets(nano, pico, jet_islep_nano_idx, jet_isvlep_nano_idx, jet_isphoton_nano_idx,
-                                                          btag_wpts[year], btag_df_wpts[year], isFastsim, isSignal);
+                                                          btag_wpts[year], btag_df_wpts[year], isFastsim);
     jet_producer.WriteJetSystemPt(nano, pico, sig_jet_nano_idx, btag_wpts[year][1], isFastsim); // usually w.r.t. medium WP
 
     // calculate mT only for single lepton events
@@ -295,30 +294,6 @@ int main(int argc, char *argv[]){
     pico.out_sys_fs_lep() = sys_fs_lep;
     pico.out_w_photon()   = w_photon;
     pico.out_sys_photon() = sys_photon; 
-    if(isZgamma || isData) {
-      pico.out_w_btag()    = 1.; 
-      pico.out_w_btag_df() = 1.; 
-      pico.out_w_bhig()    = 1.; 
-      pico.out_w_bhig_df() = 1.; 
-      pico.out_sys_bchig().resize(2,0); pico.out_sys_udsghig().resize(2,0);
-      pico.out_sys_fs_bchig().resize(2,0); pico.out_sys_fs_udsghig().resize(2,0);
-    }
-    else {
-      pico.out_w_btag()    = btag_weighter.EventWeight(pico, BTagEntry::OP_MEDIUM, ctr, ctr);
-      pico.out_w_btag_df() = btag_df_weighter.EventWeight(pico, BTagEntry::OP_MEDIUM, ctr, ctr);
-      pico.out_w_bhig()    = btag_weighter.EventWeight(pico, op_all, ctr, ctr);
-      pico.out_w_bhig_df() = btag_df_weighter.EventWeight(pico, op_all, ctr, ctr);
-      pico.out_sys_bchig().resize(2,0); pico.out_sys_udsghig().resize(2,0);
-      pico.out_sys_fs_bchig().resize(2,0); pico.out_sys_fs_udsghig().resize(2,0);
-      for(size_t i = 0; i<2; ++i){ 
-        pico.out_sys_bchig()[i]   = btag_weighter.EventWeight(pico, op_all, updn[i], ctr);
-        pico.out_sys_udsghig()[i] = btag_weighter.EventWeight(pico, op_all, ctr, updn[i]);
-        if (isSignal) {
-          pico.out_sys_fs_bchig()[i]   = btag_weighter.EventWeight(pico, op_all, ctr, ctr, updn[i], ctr);
-          pico.out_sys_fs_udsghig()[i] = btag_weighter.EventWeight(pico, op_all, ctr, ctr, ctr, updn[i]);
-        }
-      }
-    }
 
     // to be calculated in Step 2: merge_corrections
     if (!isData)
@@ -342,9 +317,7 @@ int main(int argc, char *argv[]){
     pico.out_sys_prefire() = sys_prefire;
 
     // do not include w_prefire, or anything that should not be renormalized! Will be set again in Step 3
-    pico.out_weight() = pico.out_w_lumi() *
-                        w_lep * w_fs_lep * pico.out_w_bhig() *
-                        w_photon * pico.out_w_pu();
+    pico.out_weight() = pico.out_w_lumi() * w_lep * w_fs_lep * w_photon * pico.out_w_pu();
 
     // ----------------------------------------------------------------------------------------------
     //              *** Add up weights to save for renormalization step ***
@@ -374,17 +347,9 @@ int main(int argc, char *argv[]){
           wgt_sums.out_sys_photon()[i] += sys_photon[i];
         }
       }
-      wgt_sums.out_w_btag()    += pico.out_w_btag();
-      wgt_sums.out_w_btag_df() += pico.out_w_btag_df();
-      wgt_sums.out_w_bhig()    += pico.out_w_bhig();
-      wgt_sums.out_w_bhig_df() += pico.out_w_bhig_df();
       wgt_sums.out_w_pu()      += pico.out_w_pu();
 
       for(size_t i = 0; i<2; ++i){ 
-        wgt_sums.out_sys_bchig()[i]      += pico.out_sys_bchig()[i];
-        wgt_sums.out_sys_udsghig()[i]    += pico.out_sys_udsghig()[i];
-        wgt_sums.out_sys_fs_bchig()[i]   += pico.out_sys_fs_bchig()[i];
-        wgt_sums.out_sys_fs_udsghig()[i] += pico.out_sys_fs_udsghig()[i];
         wgt_sums.out_sys_pu()[i]         += pico.out_sys_pu()[i];
       }
       for(size_t i = 0; i<pico.out_sys_murf().size(); ++i){ 
@@ -416,20 +381,12 @@ void Initialize(corrections_tree &wgt_sums){
   wgt_sums.out_w_lep()      = 0.;
   wgt_sums.out_w_fs_lep()   = 0.;
   wgt_sums.out_w_photon()   = 0.;
-  wgt_sums.out_w_btag()     = 0.;
-  wgt_sums.out_w_btag_df()  = 0.;
-  wgt_sums.out_w_bhig()     = 0.;
-  wgt_sums.out_w_bhig_df()  = 0.;
   wgt_sums.out_w_pu()       = 0.;
   // w_prefire should not be normalized!!
 
   wgt_sums.out_sys_lep().resize(2,0);
   wgt_sums.out_sys_fs_lep().resize(2,0);
   wgt_sums.out_sys_photon().resize(2,0);
-  wgt_sums.out_sys_bchig().resize(2,0);
-  wgt_sums.out_sys_udsghig().resize(2,0);
-  wgt_sums.out_sys_fs_bchig().resize(2,0);
-  wgt_sums.out_sys_fs_udsghig().resize(2,0);
   wgt_sums.out_sys_pu().resize(2,0);
   wgt_sums.out_sys_murf().resize(9,0);
 }

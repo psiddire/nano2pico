@@ -18,8 +18,7 @@ public:
                              std::vector<int> jet_isphoton_nano_idx,
                              const std::vector<float> &btag_wpts, 
                              const std::vector<float> &btag_df_wpts, 
-                             bool isFastsim, 
-                             bool isSignal);
+                             bool isFastsim);
   void WriteJetSystemPt(nano_tree &nano, pico_tree &pico, 
                               std::vector<int> &sig_jet_nano_idx, const float &btag_wpt, bool isFastsim);
 private:

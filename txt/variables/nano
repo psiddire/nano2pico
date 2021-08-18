@@ -610,6 +610,7 @@ bool HLT_Ele50_IsoVVVL_PFHT450
 # ZGamma triggers
 bool HLT_Mu17_Photon30_IsoCaloId
 bool HLT_Ele23_CaloIdM_TrackIdM_PFJet30
+bool HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30
 bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
 bool HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL
@@ -619,3 +620,9 @@ bool HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
 bool HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8
 bool HLT_Photon175
+bool HLT_TriplePhoton_20_20_20_CaloIdLV2_R9IdVL
+bool HLT_TriplePhoton_20_20_20_CaloIdLV2
+bool HLT_TriplePhoton_30_30_10_CaloIdLV2_R9IdVL
+bool HLT_TriplePhoton_30_30_10_CaloIdLV2
+bool HLT_TriplePhoton_35_35_5_CaloIdLV2_R9IdVL
+

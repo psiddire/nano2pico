@@ -8,21 +8,11 @@ float w_lep
 float w_fs_lep
 float w_photon
 
-# just need to add up 
-float w_btag
-float w_btag_df
-float w_bhig
-float w_bhig_df
-
 float w_pu
 
 vector<float> sys_lep
 vector<float> sys_fs_lep
 vector<float> sys_photon
-vector<float> sys_bchig
-vector<float> sys_udsghig
-vector<float> sys_fs_bchig
-vector<float> sys_fs_udsghig
 
 vector<float> sys_pu
 vector<float> sys_murf

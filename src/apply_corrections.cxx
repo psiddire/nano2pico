@@ -49,51 +49,35 @@ int main(int argc, char *argv[]){
     }
 
     pico.out_sys_lep().resize(2); pico.out_sys_fs_lep().resize(2);
-    if(pico.nlep()==0) { // load from calculated correction
-      pico.out_w_lep()         = corr.w_lep();
-      pico.out_w_fs_lep()      = corr.w_fs_lep();
-      pico.out_sys_lep()       = corr.sys_lep();
-      pico.out_sys_fs_lep()    = corr.sys_fs_lep();
-    } else { //load from original tree
-      pico.out_w_lep()         = pico.w_lep();
-      pico.out_w_fs_lep()      = pico.w_fs_lep();
-      pico.out_sys_lep()       = pico.sys_lep();
-      pico.out_sys_fs_lep()    = pico.sys_fs_lep();
-    }
-
-
-    pico.out_w_btag()     = pico.w_btag()*corr.w_btag();
-    pico.out_w_bhig()     = pico.w_bhig()*corr.w_bhig();
-    pico.out_w_btag_df()  = pico.w_btag_df()*corr.w_btag_df();
-    pico.out_w_bhig_df()  = pico.w_bhig_df()*corr.w_bhig_df();
+    pico.out_w_lep()         = pico.w_lep();
+    pico.out_w_fs_lep()      = pico.w_fs_lep();
+    pico.out_sys_lep()       = pico.sys_lep();
+    pico.out_sys_fs_lep()    = pico.sys_fs_lep();
     
     pico.out_w_pu()       = pico.w_pu()*corr.w_pu();
-
 
     pico.out_w_lumi() = pico.w_lumi()>0 ? 1. : -1.; //get the generator weight sign
     pico.out_w_lumi() *= corr.w_lumi();
 
     pico.out_weight() = corr.weight() * pico.out_w_lumi() *
                      pico.out_w_lep() * pico.out_w_fs_lep() * //post-corr values in order for 0l to be correct
-                     pico.w_bhig() * pico.w_pu() * pico.w_prefire();
+                     pico.w_pu() * pico.w_prefire();
 
-    pico.out_sys_bchig().resize(2); pico.out_sys_fs_bchig().resize(2);
-    pico.out_sys_udsghig().resize(2); pico.out_sys_fs_udsghig().resize(2);
     pico.out_sys_pu().resize(2);
     for (unsigned i(0); i<2; i++) {        
-      pico.out_sys_bchig()[i]      = pico.sys_bchig()[i]*corr.sys_bchig()[i];
-      pico.out_sys_udsghig()[i]    = pico.sys_udsghig()[i]*corr.sys_udsghig()[i];
-      pico.out_sys_fs_bchig()[i]   = pico.sys_fs_bchig()[i]*corr.sys_fs_bchig()[i];
-      pico.out_sys_fs_udsghig()[i] = pico.sys_fs_udsghig()[i]*corr.sys_fs_udsghig()[i];
-
       pico.out_sys_pu()[i]         = pico.sys_pu()[i]*corr.sys_pu()[i];
-
     } 
-    pico.out_sys_murf().resize(9);
-    for (unsigned i(0); i<9; i++) {        
-      pico.out_sys_murf()[i]      = pico.sys_murf()[i]*corr.sys_murf()[i];
-    }
 
+    pico.out_sys_murf().resize(9);
+
+    string str1("WplusH_HToZG");
+    string str2("ZH_HToZG");
+
+    if (!((in_file.find(str1) != std::string::npos) || (in_file.find(str2) != std::string::npos))) {
+      for (unsigned i(0); i<9; i++) {
+	pico.out_sys_murf()[i]      = pico.sys_murf()[i]*corr.sys_murf()[i];
+      }
+    }
 
     // for (unsigned i(0); i<pico.w_pdf().size(); i++) 
     //   pico.out_w_pdf()[i] = pico.w_pdf()[i]*corr.w_pdf()[i];    

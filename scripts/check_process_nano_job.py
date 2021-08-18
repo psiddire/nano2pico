@@ -71,7 +71,7 @@ if 'data' in infile_path:
     pass_muon_trigger = CheckPassTriggers(infile, muon_triggers)
     pass_jetht_trigger = CheckPassTriggers(infile, jetht_triggers)
 
-    if (('SingleElectron' in infile_path) or ('EGamma' in infile_path)) and (not pass_egamma_triggers or pass_met_trigger):
+    if (('SingleElectron' in infile_path) or ('EGamma' in infile_path)) and (not pass_egamma_trigger or pass_met_trigger):
       continue
     if (('SingleMuon' in infile_path)) and (not pass_muon_trigger or pass_egamma_trigger or pass_met_trigger):
       continue
