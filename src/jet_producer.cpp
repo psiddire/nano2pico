@@ -90,8 +90,6 @@ vector<int> JetProducer::WriteJets(nano_tree &nano, pico_tree &pico,
     pico.out_jet_isphoton().push_back(isphoton);
     pico.out_jet_isgood().push_back(isgood);
     pico.out_jet_id().push_back(nano.Jet_jetId()[ijet]);
-    pico.out_jet_mht_dphi().push_back(DeltaPhi(nano.Jet_phi()[ijet], mht_vec.Phi()));
-    pico.out_jet_met_dphi().push_back(DeltaPhi(nano.Jet_phi()[ijet], MET_phi));
     if (!isData) {
       pico.out_jet_hflavor().push_back(nano.Jet_hadronFlavour()[ijet]);
       pico.out_jet_pflavor().push_back(nano.Jet_partonFlavour()[ijet]);
@@ -119,26 +117,6 @@ vector<int> JetProducer::WriteJets(nano_tree &nano, pico_tree &pico,
     }
   } // end jet loop
 
-  pico.out_low_dphi_mht_e5() = false;
-  pico.out_low_dphi_met_e5() = false;
-  for (unsigned ijet(0); ijet<pico.out_jet_mht_dphi().size(); ijet++){
-    float cut_ = ijet<=1 ? 0.5 : 0.3;
-    if (pico.out_jet_mht_dphi()[ijet]<=cut_) pico.out_low_dphi_mht_e5() = true;
-    if (pico.out_jet_met_dphi()[ijet]<=cut_) pico.out_low_dphi_met_e5() = true;
-    if (ijet==3) break;
-  }
-
-  pico.out_low_dphi_mht() = false;
-  pico.out_low_dphi_met() = false;
-  for (unsigned ijet(0), ijet_e24(0); ijet<pico.out_jet_mht_dphi().size(); ijet++){
-    if (fabs(pico.out_jet_eta()[ijet]) > max_jet_eta) continue;
-    float cut_ = ijet_e24<=1 ? 0.5 : 0.3;
-    if (pico.out_jet_mht_dphi()[ijet]<=cut_) pico.out_low_dphi_mht() = true;
-    if (pico.out_jet_met_dphi()[ijet]<=cut_) pico.out_low_dphi_met() = true;
-    if (ijet_e24==3) break;
-    ijet_e24++;
-  }
-
   if (verbose) cout<<"Done with AK4 jets"<<endl;
   return sig_jet_nano_idx;
 }
@@ -150,16 +128,10 @@ void JetProducer::WriteJetSystemPt(nano_tree &nano, pico_tree &pico,
   getJetWithJEC(nano, isFastsim, Jet_pt, Jet_mass);
 
   TLorentzVector jetsys_v4, jetsys_nob_v4;
-  int njet_nob(0);
   for (auto &idx: sig_jet_nano_idx) {
     TLorentzVector ijet_v4;
     ijet_v4.SetPtEtaPhiM(Jet_pt[idx], nano.Jet_eta()[idx], nano.Jet_phi()[idx], Jet_mass[idx]);
     jetsys_v4 += ijet_v4;
-
-    if (nano.Jet_btagDeepB()[idx] <= btag_wpt){
-      njet_nob++;
-      jetsys_nob_v4 += ijet_v4;
-    }
   }
 
   if (sig_jet_nano_idx.size()>0) {
@@ -167,12 +139,6 @@ void JetProducer::WriteJetSystemPt(nano_tree &nano, pico_tree &pico,
     pico.out_jetsys_eta() = jetsys_v4.Eta();
     pico.out_jetsys_phi() = jetsys_v4.Phi();
     pico.out_jetsys_m() = jetsys_v4.M();
-    if (njet_nob>0) {
-      pico.out_jetsys_nob_pt() = jetsys_nob_v4.Pt();
-      pico.out_jetsys_nob_eta() = jetsys_nob_v4.Eta();
-      pico.out_jetsys_nob_phi() = jetsys_nob_v4.Phi();
-      pico.out_jetsys_nob_m() = jetsys_nob_v4.M();
-    }
   }
   return;
 }
