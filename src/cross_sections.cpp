@@ -14,7 +14,7 @@ namespace xsec{
     // https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns
     if(file.Contains("DYJetsToLL"))           xsec = 6077.22;
     if(file.Contains("ZGTo2LG"))              xsec = 117.864;
-    if(file.Contains("ZGToLLG"))              xsec = 117.864; // Other sample name
+    if(file.Contains("ZGToLLG"))              xsec = 55.48; // Other sample name
     if(file.Contains("TTTo2L2Nu"))            xsec = 88.29;
     if(file.Contains("TTToSemi"))             xsec = 365.35;
     if(file.Contains("TTToHadronic"))         xsec = 377.96;

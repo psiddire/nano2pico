@@ -6,8 +6,8 @@ from glob import glob
 parser = argparse.ArgumentParser(description="Submits batch jobs to apply new SFs and compute sum-of-weights",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-i","--in_dir", default="",
-                    help="Directory where the NanoAOD files are, e.g. /mnt/hadoop/pico/NanoAODv5/nano/2016/mc/")
-parser.add_argument("-p","--production", default="higgsino_angeles",
+                    help="Directory where the NanoAOD files are, e.g. /net/cms17/cms17r0/pico/NanoAODv2/nano/2017/mc/")
+parser.add_argument("-p","--production", default="zgamma_mc_ul",
                     help="Determines the output folder.")
 parser.add_argument("-d","--dataset_list", default="",
                     help="File with the list of dataset names as they appear in DAS or the list of filenames (with wildcards). If not specified will run on all files in input folder")
@@ -40,10 +40,8 @@ if args['dataset_list']!='':
       if ds[0]!="/": # in case of empty lines or comments
         continue
       tmp_ = ds.split("/")
-      if("NanoAODv4" in tmp_[2]):
-        wanted_file_substr.append(tmp_[1]+'__'+tmp_[2].replace("NanoAODv4-","NanoAODv4__"))
-      elif("NanoAODv5" in tmp_[2]):
-        wanted_file_substr.append(tmp_[1]+'__'+tmp_[2].replace("NanoAODv5-","NanoAODv5__"))
+      if("NanoAODv2" in tmp_[2]):
+        wanted_file_substr.append(tmp_[1]+'__'+tmp_[2].replace("NanoAODv2-","NanoAODv2__"))
       else:
         wanted_file_substr.append(tmp_[1]+'__'+tmp_[2].replace("NanoAODv7-","NanoAODv7__"))
     for istr in wanted_file_substr:

@@ -132,6 +132,7 @@ int main(int argc, char *argv[]){
 
   // Other tools
   EventTools event_tools(in_path, year);
+  int event_type = event_tools.GetEventType();
 
   // Initialize trees
   nano_tree nano(in_path);
@@ -172,6 +173,7 @@ int main(int argc, char *argv[]){
     pico.out_event()     = nano.event();
     pico.out_lumiblock() = nano.luminosityBlock();
     pico.out_run()       = nano.run();
+    pico.out_type()      = event_type;
     if (isData) pico.out_stitch() = true;
     else event_tools.WriteStitch(nano, pico);
     // number of reconstructed primary vertices
@@ -288,10 +290,6 @@ int main(int argc, char *argv[]){
     else if (!isData) {
       lep_weighter.FullSim(pico, w_lep, sys_lep);
     }
-    pico.out_w_lep()      = w_lep;
-    pico.out_w_fs_lep()   = w_fs_lep;
-    pico.out_sys_lep()    = sys_lep; 
-    pico.out_sys_fs_lep() = sys_fs_lep;
     pico.out_w_photon()   = w_photon;
     pico.out_sys_photon() = sys_photon; 
 
@@ -317,7 +315,7 @@ int main(int argc, char *argv[]){
     pico.out_sys_prefire() = sys_prefire;
 
     // do not include w_prefire, or anything that should not be renormalized! Will be set again in Step 3
-    pico.out_weight() = pico.out_w_lumi() * w_lep * w_fs_lep * w_photon * pico.out_w_pu();
+    pico.out_weight() = pico.out_w_lumi() * w_photon * pico.out_w_pu();
 
     // ----------------------------------------------------------------------------------------------
     //              *** Add up weights to save for renormalization step ***
@@ -334,12 +332,6 @@ int main(int argc, char *argv[]){
         wgt_sums.out_tot_weight_l0() += pico.out_weight()*(nano.Generator_weight()>0 ? 1:-1); // multiplying by GenWeight to remove the sign...
       }else{
         wgt_sums.out_tot_weight_l1() += pico.out_weight()*(nano.Generator_weight()>0 ? 1:-1);
-        wgt_sums.out_w_lep() += w_lep;
-        if(isFastsim) wgt_sums.out_w_fs_lep() += w_fs_lep;
-        for(size_t i = 0; i<pico.out_sys_lep().size(); ++i){
-          wgt_sums.out_sys_lep()[i] += sys_lep[i];
-          wgt_sums.out_sys_fs_lep()[i] += sys_fs_lep[i];
-        }
       }
       if(pico.out_nphoton()>0) {
         wgt_sums.out_w_photon() += w_photon;
@@ -378,14 +370,10 @@ void Initialize(corrections_tree &wgt_sums){
 
   wgt_sums.out_weight()     = 0.;
   wgt_sums.out_w_lumi()     = 0.;
-  wgt_sums.out_w_lep()      = 0.;
-  wgt_sums.out_w_fs_lep()   = 0.;
   wgt_sums.out_w_photon()   = 0.;
   wgt_sums.out_w_pu()       = 0.;
   // w_prefire should not be normalized!!
 
-  wgt_sums.out_sys_lep().resize(2,0);
-  wgt_sums.out_sys_fs_lep().resize(2,0);
   wgt_sums.out_sys_photon().resize(2,0);
   wgt_sums.out_sys_pu().resize(2,0);
   wgt_sums.out_sys_murf().resize(9,0);

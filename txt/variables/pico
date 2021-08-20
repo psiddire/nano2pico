@@ -2,7 +2,7 @@
 int run
 int lumiblock
 Long64_t event
-
+int type
 bool stitch
 bool stitch_ht
 bool stitch_htmet
@@ -223,8 +223,6 @@ int ntrutaul
 ################  Weights   ##################
 float weight
 float w_lumi
-float w_lep
-float w_fs_lep
 float w_photon
 float w_pu
 float w_prefire
@@ -247,8 +245,6 @@ bool HLT_Photon175
 ################  Systematic variations  - to be implemented as needed  ##################
 
 # +/- variations are index 0 and 1
-vector<float> sys_lep
-vector<float> sys_fs_lep
 vector<float> sys_photon
 vector<float> sys_pu
 vector<float> sys_prefire

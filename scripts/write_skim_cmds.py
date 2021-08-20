@@ -8,7 +8,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Submits batch jobs to apply new SFs and compute sum-of-weights',
                                    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
   parser.add_argument('-i','--in_dir', required=True, 
-                      default='/net/cms29/cms29r0/pico/NanoAODv5/higgsino_angeles/2016/mc/unskimmed/',
+                      default='/net/cms17/cms17r0/pico/NanoAODv2/zgamma_mc_ul/2017/mc/unskimmed/',
                       help='Directory where the raw pico files are')
   parser.add_argument('-k','--skim_name', required=True, default='',
                       help='Plain text name for the skim. Output folder name will be named according to this.')
@@ -54,7 +54,7 @@ if __name__ == '__main__':
   cmdfile.close()
   os.chmod(cmdfile_name, 0o755)
   if not args['overwrite']:
-    print('Found existing {} output files, so will submit  {} jobs. Use --overwrite to ignore the existing output and run all jobs.\n'.format(nexisting, len(in_file_paths)-nexisting))
+    print('Found existing {} output files, so will submit {} jobs. Use --overwrite to ignore the existing output and run all jobs.\n'.format(nexisting, len(in_file_paths)-nexisting))
   else:
     print('Found existing {} output files, which will be overwritten.\n'.format(nexisting))
 

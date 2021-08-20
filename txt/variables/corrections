@@ -4,21 +4,12 @@
 # require special treatment
 float weight
 float w_lumi
-float w_lep
-float w_fs_lep
 float w_photon
-
 float w_pu
 
-vector<float> sys_lep
-vector<float> sys_fs_lep
 vector<float> sys_photon
-
 vector<float> sys_pu
 vector<float> sys_murf
-
-# vector<float> w_pdf
-# vector<float> sys_pdf
 
 # additional variables
 int neff

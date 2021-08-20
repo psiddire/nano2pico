@@ -5,15 +5,14 @@ from glob import glob
 
 def getTag(path):
   tag = path.split("/")[-1]
-  tag = tag.split("RunIISummer16NanoAODv4")[0]
 
-  tag = tag.split("RunIISummer16NanoAODv5")[0]
-  tag = tag.split("RunIIFall17NanoAODv5")[0]
-  tag = tag.split("RunIIAutumn18NanoAODv5")[0]
+  tag = tag.split("RunIISummer19UL16NanoAODv2")[0]
+  tag = tag.split("RunIISummer19UL17NanoAODv2")[0]
+  tag = tag.split("RunIISummer19UL18NanoAODv2")[0]
 
-  tag = tag.split("RunIISummer16NanoAODv7")[0]
-  tag = tag.split("RunIIFall17NanoAODv7")[0]
-  tag = tag.split("RunIIAutumn18NanoAODv7")[0]
+  tag = tag.split("RunIISummer20UL16NanoAODv2")[0]
+  tag = tag.split("RunIISummer20UL17NanoAODv2")[0]
+  tag = tag.split("RunIISummer20UL18NanoAODv2")[0]
 
   tag = tag.split("_ext")[0]
   tag = tag.replace("raw_pico_","")
@@ -22,7 +21,7 @@ def getTag(path):
 
 parser = argparse.ArgumentParser(description="Submits batch jobs to apply new SFs and compute sum-of-weights",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-i","--in_dir", default="/net/cms29/cms29r0/pico/NanoAODv5/higgsino_angeles/2016/mc/raw_pico/",
+parser.add_argument("-i","--in_dir", default="/net/cms17/cms17r0/pico/NanoAODv2/zgamma_mc_ul/2017/mc/raw_pico/",
                     help="Directory where the raw pico files are")
 parser.add_argument("--overwrite", action='store_true',
                     help="Process all input files regardless whether output exists.")

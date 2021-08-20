@@ -35,9 +35,8 @@ void Initialize(corrections_tree &wgt_sums, corrections_tree &corr);
 void AddEntry(corrections_tree &wgt_sums, corrections_tree &corr);
 void FixLumi(corrections_tree &corr, const string &corr_path, int year);
 void Normalize(corrections_tree &corr);
-void Fix0L(corrections_tree &corr);
-
 void GetOptions(int argc, char *argv[]);
+
 
 int main(int argc, char *argv[]){
 
@@ -75,8 +74,6 @@ int main(int argc, char *argv[]){
   }
 
   FixLumi(corr, output_path, year);
-  Fix0L(corr);
-
   Normalize(corr);
 
   corr.Fill();
@@ -84,11 +81,10 @@ int main(int argc, char *argv[]){
   cout << "Wrote output to " << output_path << endl;
 }
 
+
 void Initialize(corrections_tree &wgt_sums, corrections_tree &corr){
   corr.out_weight() = 0.;
   corr.out_w_lumi() = 0.;
-  corr.out_w_lep() = 0.;
-  corr.out_w_fs_lep() = 0.;
   corr.out_w_pu() = 0.;
   // w_prefire should not be normalized!!
 
@@ -98,12 +94,8 @@ void Initialize(corrections_tree &wgt_sums, corrections_tree &corr){
   corr.out_tot_weight_l0() = 0.;
   corr.out_tot_weight_l1() = 0.;
 
-  CopySize(wgt_sums.sys_lep(),                corr.out_sys_lep());
-  CopySize(wgt_sums.sys_fs_lep(),             corr.out_sys_fs_lep());
   CopySize(wgt_sums.sys_pu(),                 corr.out_sys_pu());
   CopySize(wgt_sums.sys_murf(),               corr.out_sys_murf());
-  // CopySize(wgt_sums.w_pdf(),                  corr.out_w_pdf());
-  // CopySize(wgt_sums.sys_pdf(),                corr.out_sys_pdf());
 }
 
 
@@ -115,16 +107,10 @@ void AddEntry(corrections_tree &wgt_sums, corrections_tree &corr){
   corr.out_tot_weight_l1() += wgt_sums.tot_weight_l1();
 
   corr.out_weight()        += wgt_sums.weight();
-  corr.out_w_lep()         += wgt_sums.w_lep();
-  corr.out_w_fs_lep()      += wgt_sums.w_fs_lep();
   corr.out_w_pu()          += wgt_sums.w_pu();
 
-  VecAdd(wgt_sums.sys_lep(),           corr.out_sys_lep());
-  VecAdd(wgt_sums.sys_fs_lep(),        corr.out_sys_fs_lep());
   VecAdd(wgt_sums.sys_pu(),            corr.out_sys_pu());
   VecAdd(wgt_sums.sys_murf(),          corr.out_sys_murf());
-  // VecAdd(wgt_sums.w_pdf(),             corr.out_w_pdf());
-  // VecAdd(wgt_sums.sys_pdf(),           corr.out_sys_pdf());
 }
 
 
@@ -132,41 +118,15 @@ void FixLumi(corrections_tree &corr, const string &corr_path, int year){
   double xsec(0.); const float lumi = 1000.;
   xsec = xsec::crossSection(corr_path, year);  
   corr.out_w_lumi() = xsec*lumi/corr.out_neff();
-}
-
-
-void Fix0L(corrections_tree &corr){
-  double nent = corr.out_nent();
-  double nent_zlep = corr.out_nent_zlep();
-
-  // Lepton weights corrections to be applied only to 0-lep events
-  //----------------------------------------------------------------
-  corr.out_w_lep()           = corr.out_w_lep() ? (nent-corr.out_w_lep())/nent_zlep : 1.;
-  corr.out_w_fs_lep()        = corr.out_w_fs_lep() ? (nent-corr.out_w_fs_lep())/nent_zlep : 1.;
-  for(size_t i = 0; i<corr.out_sys_lep().size(); i++){
-    corr.out_sys_lep()[i]    = corr.out_sys_lep()[i] ? (nent-corr.out_sys_lep()[i])/nent_zlep : 1.;
-  }
-  for(size_t i = 0; i<corr.out_sys_fs_lep().size(); i++){
-    corr.out_sys_fs_lep()[i] = corr.out_sys_fs_lep()[i] ? (nent-corr.out_sys_fs_lep()[i])/nent_zlep : 1.;
-  }
+  // corr.out_weight() = corr.out_weight()/corr.out_nent();
 }
 
 
 void Normalize(corrections_tree &corr){
   double nent = corr.out_nent();
-
-  // w_lep fixed in Fix0L
-
-  Normalize(corr.out_weight(), nent);
-  Normalize(corr.out_w_lumi(), nent);
-
   Normalize(corr.out_w_pu(), nent);
-
   Normalize(corr.out_sys_pu(), nent);
-
   Normalize(corr.out_sys_murf(), nent);
-  // Normalize(corr.out_w_pdf(), nent);
-  // Normalize(corr.out_sys_pdf(), nent);
 }
 
 

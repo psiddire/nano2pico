@@ -8,18 +8,13 @@ def findBaseSampleNames(folder):
   for file in glob(folder+'/*.root'):
     dataset_tag = file.split('/')[-1]
 
-    dataset_tag = dataset_tag.split('__RunIISummer16NanoAODv5__')[0]
-    dataset_tag = dataset_tag.split('__RunIIFall17NanoAODv5__')[0]
-    dataset_tag = dataset_tag.split('__RunIIAutumn18NanoAODv5__')[0]
-    dataset_tag = dataset_tag.split('__Nano1June2019')[0]
-    dataset_tag = dataset_tag.split('__Nano25Oct2019')[0]
+    dataset_tag = dataset_tag.split('__RunIISummer19UL16NanoAODv2__')[0]
+    dataset_tag = dataset_tag.split('__RunIISummer19UL17NanoAODv2__')[0]
+    dataset_tag = dataset_tag.split('__RunIISummer19UL18NanoAODv2__')[0]
 
-    # For NanoAODv7
-    dataset_tag = dataset_tag.split('__RunIISummer16NanoAODv7__')[0]
-    dataset_tag = dataset_tag.split('__RunIIFall17NanoAODv7__')[0]
-    dataset_tag = dataset_tag.split('__RunIIAutumn18NanoAODv7__')[0]
-    dataset_tag = dataset_tag.split('__Nano02Apr2020')[0] #mc
-    dataset_tag = dataset_tag.split('__02Apr2020')[0] #data
+    dataset_tag = dataset_tag.split('__RunIISummer20UL16NanoAODv2__')[0]
+    dataset_tag = dataset_tag.split('__RunIISummer20UL17NanoAODv2__')[0]
+    dataset_tag = dataset_tag.split('__RunIISummer20UL18NanoAODv2__')[0]
 
     dataset_tag = dataset_tag.split('_ext')[0]
     dataset_tag = dataset_tag.replace('.root','')
@@ -36,7 +31,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Submits batch jobs to apply new SFs and compute sum-of-weights',
                                    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
   parser.add_argument('-i','--in_dir', required=True, 
-                      default='/net/cms29/cms29r0/pico/NanoAODv5/higgsino_angeles/2016/mc/skim_met150/',
+                      default='/net/cms17/cms17r0/pico/NanoAODv2/zgamma_mc_ul/2017/mc/skim_llg/',
                       help='Directory where the skim is.')
   parser.add_argument('-l','--slim_name', required=True, default='higmc',
                       help='Name of the slim, e.g. "higmc". N.B. code then assumes that txt/slim_rules/higmc.txt exists.')
@@ -92,6 +87,3 @@ if __name__ == '__main__':
   os.system('convert_cl_to_jobs_info.py '+cmdfile_name+' '+json_name)
   print('\nTo generate job json and submit jobs:')
   print('auto_submit_jobs.py '+json_name)
-
-
-

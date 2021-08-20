@@ -48,20 +48,12 @@ int main(int argc, char *argv[]){
       cout<<"Processing event: "<<entry<<endl;
     }
 
-    pico.out_sys_lep().resize(2); pico.out_sys_fs_lep().resize(2);
-    pico.out_w_lep()         = pico.w_lep();
-    pico.out_w_fs_lep()      = pico.w_fs_lep();
-    pico.out_sys_lep()       = pico.sys_lep();
-    pico.out_sys_fs_lep()    = pico.sys_fs_lep();
-    
-    pico.out_w_pu()       = pico.w_pu()*corr.w_pu();
-
     pico.out_w_lumi() = pico.w_lumi()>0 ? 1. : -1.; //get the generator weight sign
     pico.out_w_lumi() *= corr.w_lumi();
 
-    pico.out_weight() = corr.weight() * pico.out_w_lumi() *
-                     pico.out_w_lep() * pico.out_w_fs_lep() * //post-corr values in order for 0l to be correct
-                     pico.w_pu() * pico.w_prefire();
+    pico.out_weight() = pico.weight() * pico.out_w_lumi(); // * pico.w_prefire();
+
+    pico.out_w_pu() = pico.w_pu()*corr.w_pu();
 
     pico.out_sys_pu().resize(2);
     for (unsigned i(0); i<2; i++) {        

@@ -15,26 +15,26 @@ EventTools::EventTools(const string &name_, int year_):
   isDYJets_LO(false),
   dataset(-1){
 
-  if(Contains(name, "TTJets_") && Contains(name, "genMET-") && Contains(name, "madgraphMLM")) 
+  if(Contains(name, "TTJets_") && Contains(name, "genMET-") && Contains(name, "madgraphMLM"))
     isTTJets_LO_MET = true;
 
-  if(Contains(name, "TTJets_") && !Contains(name, "TTJets_HT") && !Contains(name, "genMET-") &&Contains(name, "madgraphMLM")) 
+  if(Contains(name, "TTJets_") && !Contains(name, "TTJets_HT") && !Contains(name, "genMET-") &&Contains(name, "madgraphMLM"))
     isTTJets_LO_Incl = true;
 
-  if(Contains(name, "TTJets_HT") && Contains(name, "madgraphMLM")) 
+  if(Contains(name, "TTJets_HT") && Contains(name, "madgraphMLM"))
     isTTJets_LO_HT = true;
 
   if(Contains(name, "WJetsToLNu_Tune")  && Contains(name,"madgraphMLM"))
     isWJets_LO = true;
-  
+
   if(Contains(name, "DYJetsToLL_M-50_Tune")  && Contains(name,"madgraphMLM"))
     isDYJets_LO = true;
 
   if(Contains(name, "EGamma")) // looks like this replaced SingleElectron and DoubleEG starting in 2018
     dataset = Dataset::EGamma;
-  else if(Contains(name, "DoubleEG")) 
+  else if(Contains(name, "DoubleEG"))
     dataset = Dataset::DoubleEG;
-  else if(Contains(name, "DoubleMuon")) 
+  else if(Contains(name, "DoubleMuon"))
     dataset = Dataset::DoubleMuon;
 }
 
@@ -44,15 +44,15 @@ EventTools::~EventTools(){
 void EventTools::WriteStitch(nano_tree &nano, pico_tree &pico){
   pico.out_stitch_photon() = pico.out_stitch_htmet() = pico.out_stitch() = pico.out_stitch_ht() = true;
   if(isTTJets_LO_Incl) {
-    if (nano.LHE_HTIncoming()>600) 
+    if (nano.LHE_HTIncoming()>600)
       pico.out_stitch_htmet() = pico.out_stitch_ht() = false;
     if(year==2018 && nano.GenMET_pt()>80)
       pico.out_stitch_htmet() = pico.out_stitch() = false;
-    else if (nano.GenMET_pt()>150) 
+    else if (nano.GenMET_pt()>150)
       pico.out_stitch_htmet() = pico.out_stitch() = false;
   }
 
-  if (isTTJets_LO_MET && nano.LHE_HTIncoming()>600) 
+  if (isTTJets_LO_MET && nano.LHE_HTIncoming()>600)
       pico.out_stitch_htmet() = pico.out_stitch_ht() = false;
 
   if (isTTJets_LO_Incl || isTTJets_LO_MET || isTTJets_LO_HT) {
@@ -80,10 +80,10 @@ void EventTools::WriteStitch(nano_tree &nano, pico_tree &pico){
     }
   }
 
-  if(isDYJets_LO  && nano.LHE_HT()>70) 
+  if(isDYJets_LO  && nano.LHE_HT()>70)
     pico.out_stitch_htmet() = pico.out_stitch_ht() = pico.out_stitch() = false;
-  
-  if(isWJets_LO  && nano.LHE_HT()>70) 
+
+  if(isWJets_LO  && nano.LHE_HT()>70)
     pico.out_stitch_htmet() = pico.out_stitch_ht() = pico.out_stitch() = false;
   return;
 }
@@ -99,11 +99,11 @@ void EventTools::WriteDataQualityFilters(nano_tree& nano, pico_tree& pico, vecto
   // jet quality filter
   pico.out_pass_jets() = true;
   for(int ijet(0); ijet<nano.nJet(); ++ijet){
-    if (Jet_pt[ijet] > min_jet_pt && nano.Jet_jetId()[ijet] < 1) 
+    if (Jet_pt[ijet] > min_jet_pt && nano.Jet_jetId()[ijet] < 1)
       pico.out_pass_jets() = false;
-  } 
+  }
 
-  // filters directly from Nano 
+  // filters directly from Nano
   // Check for 2016 MC
   pico.out_pass_goodv() = nano.Flag_goodVertices();
   pico.out_pass_cschalo_tight() = nano.Flag_globalSuperTightHalo2016Filter();
@@ -124,7 +124,7 @@ void EventTools::WriteDataQualityFilters(nano_tree& nano, pico_tree& pico, vecto
 
   // https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#Analysis_Recommendations_for_ana
   pico.out_pass() = pico.out_pass_goodv() && pico.out_pass_cschalo_tight() &&
-                    pico.out_pass_hbhe() && pico.out_pass_hbheiso() && 
+                    pico.out_pass_hbhe() && pico.out_pass_hbheiso() &&
                     pico.out_pass_ecaldeadcell() && pico.out_pass_badpfmu() &&
                     pico.out_pass_badpfmudz() && pico.out_pass_eebadsc();
 
@@ -146,20 +146,87 @@ bool EventTools::SaveTriggerDecisions(nano_tree& nano, pico_tree& pico){
   pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8() = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8();
   pico.out_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8()   = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8();
 
-  bool egamma_trigs = nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ() || nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL() || 
+  bool egamma_trigs = nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ() || nano.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL() ||
                       nano.HLT_Ele23_CaloIdM_TrackIdM_PFJet30() || nano.HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30();
 
   bool muon_trigs = nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL() || nano.HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL() ||
                     nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ() || nano.HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ() ||
                     nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8() || nano.HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8();
 
-  if ((dataset==Dataset::DoubleMuon) && muon_trigs) 
+  if ((dataset==Dataset::DoubleMuon) && muon_trigs)
     return true;
-  else if (((year==2018 && dataset==Dataset::EGamma) || ((year==2016 || year==2017) && dataset==Dataset::DoubleEG)) && egamma_trigs) 
+  else if (((year==2018 && dataset==Dataset::EGamma) || ((year==2016 || year==2017) && dataset==Dataset::DoubleEG)) && egamma_trigs)
     return true;
-  else 
+  else
     return false;
 
   return false;
 }
 
+int EventTools::GetEventType(){
+  int sample = -999, category = -9, bin = -99;
+  if(Contains(name, "Run201")){ sample = 0;
+    if(Contains(name, "DoubleEG") || Contains(name, "EGamma")){ category = 0;
+    }else if(Contains(name, "DoubleMuon")){ category = 1;
+    }
+    auto pos = name.find("Run201")+7;
+    if(pos < name.size()
+       && isalpha(name.at(pos))
+       && pos-1 < name.size()
+       && isdigit(name.at(pos-1))){
+      int run = toupper(name.at(pos))-65;
+      int year_ = name.at(pos-1)-48;
+      bin = (year_-5)*26+run+1;
+      //2015A=1, ..., 2015D=4, ..., 2016A=27, 2016B=28, 2016C=29, ...
+      if(bin > 99) bin = 0;//Sanity check
+    }
+  }
+  else if((Contains(name, "TTJets") || Contains(name, "TT_"))){ sample = 1;
+    if(Contains(name, "TTJets_Tune")){ category = 0; bin = 0; }
+    else if(Contains(name, "TT_")){ category = 1; bin = 0; }
+  }
+  else if(Contains(name, "WJetsToLNu_Tune")){ sample = 2; category = 0; bin = 0; }
+  else if(Contains(name, "ST_")){ sample = 3;
+    if(Contains(name, "ST_s-channel")){ category = 0; bin = 0;
+    }else if(Contains(name, "ST_t-channel_top")){ category = 1; bin = 0;
+    }else if(Contains(name, "ST_t-channel_antitop")){ category = 2; bin = 0;
+    }else if(Contains(name, "ST_tW_top")){ category = 3; bin = 0;
+    }else if(Contains(name, "ST_tW_antitop")){ category = 4; bin = 0;
+    }
+  }
+  else if(Contains(name, "DYJetsToLL")){ sample = 4;
+    if(Contains(name, "DYJetsToLL_M-50_Tune") && Contains(name, "madgraphMLM")){ category = 0; bin = 0; }
+    else if(Contains(name, "DYJetsToLL") && Contains(name, "amcatnloFXFX")){ category = 1; bin = 0; }
+  }
+  else if(Contains(name, "TTGJets_Tune")){ sample = 5; category = 0; bin = 0; }
+  else if(Contains(name, "WW_Tune")){ sample = 6; category = 0; bin = 0; }
+  else if(Contains(name, "WZ_Tune")){ sample = 7; category = 0; bin = 0; }
+  else if(Contains(name, "ZZ_Tune")){ sample = 8; category = 0; bin = 0; }
+  else if(Contains(name, "ZGTo")) { sample = 9; bin = 0;
+    if(Contains(name,"ZGTo2LG_Tune")) category = 0;
+    else if(Contains(name,"ZGToLLG_01J")) category = 1;
+  }
+  else if(Contains(name, "TGJets_Tune")) { sample = 10; category = 0; bin = 0; }
+  else if(Contains(name, "LLAJJ")) { sample = 11; category = 0; bin = 0; }
+  else if(Contains(name, "HToZG")) { sample = 200; bin = 0;
+    if(Contains(name,"GluGluH"))      category = 0;
+    else if(Contains(name,"VBF"))     category = 1;
+    else if(Contains(name,"WplusH"))  category = 2;
+    else if(Contains(name,"WminusH")) category = 3;
+    else if(Contains(name,"ZH"))      category = 4;
+    else if(Contains(name,"ttH"))     category = 5;
+  }
+
+  if(sample < 0 || category < 0 || bin < 0 || category > 9 || bin > 99){
+    // DBG("Could not find type code for " << name << ": sample=" << sample << ", category=" << category << ", bin=" << bin);
+    int code = -(1000*abs(sample)+100*abs(category)+abs(bin));
+    if(code >= 0) code = -99999;
+    return code;
+  }else{
+    int code = 1000*sample+100*category+bin;
+    if(code < 0 || code > 107000){
+      cout<<"ERROR:: Type code out of range for " << name << ": sample=" << sample << ", category=" << category << ", bin=" << bin;
+    }
+    return code;
+  }
+}

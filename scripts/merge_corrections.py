@@ -19,13 +19,13 @@ def ensureDir(path):
 def getTag(path):
   tag = path.split("/")[-1]
 
-  tag = tag.split("RunIISummer16NanoAODv5")[0]
-  tag = tag.split("RunIIFall17NanoAODv5")[0]
-  tag = tag.split("RunIIAutumn18NanoAODv5")[0]
+  tag = tag.split("RunIISummer19UL16NanoAODv2")[0]
+  tag = tag.split("RunIISummer19UL17NanoAODv2")[0]
+  tag = tag.split("RunIISummer19UL18NanoAODv2")[0]
 
-  tag = tag.split("RunIISummer16NanoAODv7")[0]
-  tag = tag.split("RunIIFall17NanoAODv7")[0]
-  tag = tag.split("RunIIAutumn18NanoAODv7")[0]
+  tag = tag.split("RunIISummer20UL16NanoAODv2")[0]
+  tag = tag.split("RunIISummer20UL17NanoAODv2")[0]
+  tag = tag.split("RunIISummer20UL18NanoAODv2")[0]
 
   tag = tag.split("_ext")[0]
   tag = tag.replace("wgt_sums_","")
