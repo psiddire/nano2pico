@@ -8,7 +8,10 @@ using namespace std;
 namespace xsec{
 
   float crossSection(const TString &file, int year){
-    float xsec(-999999.), Htobb(0.5824), HToZG(0.001533), ZToLL(0.100974);
+    float xsec(-999999.), HToZG(0.001533), ZToLL(0.100974);
+    float HToGG(0.00227), HToMM(0.000218), HToTT(0.06256);
+    float HToZZ(0.02641), ZToQQ(0.69911), ZToNuNu(0.2);
+    float WToLNu(0.1086), HToWW(0.2152);
 
     // Zgamma cross sections at 13 TeV
     // https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns
@@ -33,13 +36,28 @@ namespace xsec{
     if(file.Contains("WWG"))                  xsec = 0.2147;
     if(file.Contains("ZGGJetsToLLGG"))        xsec = 0.1699;
     
+    if(file.Contains("GluGluHToGG"))        xsec = HToGG * 48.58 ;
+    if(file.Contains("GluGluHToTauTau"))    xsec = HToTT * 48.58 ;
+    if(file.Contains("GluGluHToWWTo2L2Nu")) xsec = HToWW * WToLNu * WToLNu * 48.58 ;
+
+    if(file.Contains("GluGluHToMuMu"))   xsec = HToMM * 48.58 ;
+    if(file.Contains("VBFHToMuMu"))      xsec = HToMM * 3.782 ;
+    if(file.Contains("WminusH_HToMuMu")) xsec = HToMM * 0.527 ;
+    if(file.Contains("WplusH_HToMuMu"))  xsec = HToMM * 0.831 ;
+    if(file.Contains("ZH_HToMuMu"))      xsec = HToMM * 0.8839 ;
+    if(file.Contains("ttHToMuMu"))       xsec = HToMM * 0.5071 ;
+
+    if(file.Contains("GluGluHToZZTo2L2Nu")) xsec = HToZZ * ZToLL * ZToNuNu * 48.58 ;
+    if(file.Contains("GluGluHToZZTo2L2Q"))  xsec = HToZZ * ZToLL * ZToQQ * 48.58 ;
+    if(file.Contains("GluGluHToZZTo4L"))    xsec = HToZZ * ZToLL * ZToLL * 48.58 ;
     // Zgamma signal
-    if(file.Contains("GluGluHToZG"))   xsec = HToZG * ZToLL * 48.58 ;
-    if(file.Contains("VBFHToZG"))      xsec = HToZG * ZToLL * 3.782 ;
-    if(file.Contains("WplusH_HToZG"))  xsec = HToZG * ZToLL * 0.831 ;
-    if(file.Contains("WminusH_HToZG")) xsec = HToZG * ZToLL * 0.527 ;
-    if(file.Contains("ZH_HToZG"))      xsec = HToZG * ZToLL * 0.8839;
-    if(file.Contains("ttHToZG"))       xsec = HToZG * ZToLL * 0.5071;
+    if(file.Contains("GluGluHToZG"))     xsec = HToZG * ZToLL * 48.58 ;
+    if(file.Contains("VBFHToZG"))        xsec = HToZG * ZToLL * 3.782 ;
+    if(file.Contains("WplusH_HToZG"))    xsec = HToZG * ZToLL * 0.831 ;
+    if(file.Contains("WminusH_HToZG"))   xsec = HToZG * ZToLL * 0.527 ;
+    if(file.Contains("ZH_HToZG"))        xsec = HToZG * ZToLL * 0.8839;
+    if(file.Contains("ZH_ZToAll_HToZG")) xsec = HToZG * ZToLL * 0.8839;
+    if(file.Contains("ttHToZG"))         xsec = HToZG * ZToLL * 0.5071;
 
     if(xsec<=0) std::cout<<"ERROR:: Cross section not found for "<<file<<std::endl;
 

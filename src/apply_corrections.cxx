@@ -6,7 +6,7 @@
 #include "corrections_tree.hpp"
 #include "utilities.hpp"
 #include "cross_sections.hpp"
-
+// #include "photon_weighter.hpp"
 #include "TError.h"
 
 using namespace std;
@@ -20,6 +20,9 @@ namespace {
 void GetOptions(int argc, char *argv[]);
 
 int main(int argc, char *argv[]){
+
+  // PhotonWeighter photon_weighter(2017);
+
   // gErrorIgnoreLevel=6000; // Turns off ROOT errors due to missing branches       
   GetOptions(argc, argv);
 
@@ -51,9 +54,14 @@ int main(int argc, char *argv[]){
     pico.out_w_lumi() = pico.w_lumi()>0 ? 1. : -1.; //get the generator weight sign
     pico.out_w_lumi() *= corr.w_lumi();
 
-    pico.out_weight() = pico.weight() * pico.out_w_lumi(); // * pico.w_prefire();
-
     pico.out_w_pu() = pico.w_pu()*corr.w_pu();
+
+    // float w_photon(1.);
+    // photon_weighter.FullSimPost(pico, w_photon);
+    // pico.out_w_photon() = w_photon;
+    // pico.out_weight() = pico.out_w_lumi() * w_photon * pico.w_lep() * pico.out_w_pu();
+
+    pico.out_weight() = pico.weight() * pico.out_w_lumi();
 
     pico.out_sys_pu().resize(2);
     for (unsigned i(0); i<2; i++) {        
@@ -62,14 +70,15 @@ int main(int argc, char *argv[]){
 
     pico.out_sys_murf().resize(9);
 
-    string str1("WplusH_HToZG");
-    string str2("ZH_HToZG");
+    // Not working for GG sample
+    // string str1("WplusH_HToZG");
+    // string str2("ZH_HToZG");
 
-    if (!((in_file.find(str1) != std::string::npos) || (in_file.find(str2) != std::string::npos))) {
-      for (unsigned i(0); i<9; i++) {
-	pico.out_sys_murf()[i]      = pico.sys_murf()[i]*corr.sys_murf()[i];
-      }
-    }
+    // if (!((in_file.find(str1) != std::string::npos) || (in_file.find(str2) != std::string::npos))) {
+    //   for (unsigned i(0); i<9; i++) {
+    // 	pico.out_sys_murf()[i]      = pico.sys_murf()[i]*corr.sys_murf()[i];
+    //   }
+    // }
 
     // for (unsigned i(0); i<pico.w_pdf().size(); i++) 
     //   pico.out_w_pdf()[i] = pico.w_pdf()[i]*corr.w_pdf()[i];    

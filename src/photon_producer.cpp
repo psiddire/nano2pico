@@ -42,7 +42,6 @@ vector<int> PhotonProducer::WritePhotons(nano_tree &nano, pico_tree &pico, vecto
     bool isEB = nano.Photon_isScEtaEB()[iph];
     bool isEE = nano.Photon_isScEtaEE()[iph];
     bool eVeto = nano.Photon_electronVeto()[iph];
-    bool isSignal = false;
 
     if (pt <= PhotonPtCut) continue;
     if (fabs(eta) > PhotonEtaCut) continue;
@@ -83,6 +82,7 @@ vector<int> PhotonProducer::WritePhotons(nano_tree &nano, pico_tree &pico, vecto
     pico.out_photon_idmva() .insert(pico.out_photon_idmva() .begin()+shift, mva);
     pico.out_photon_sig()   .insert(pico.out_photon_sig()   .begin()+shift, isSignal);
     pico.out_photon_drmin() .insert(pico.out_photon_drmin() .begin()+shift, minLepDR);
+    pico.out_photon_elidx() .insert(pico.out_photon_elidx() .begin()+shift, nano.Photon_electronIdx()[iph]);
     nphotons++;
     if (!isData)
       pico.out_photon_pflavor().insert(pico.out_photon_pflavor().begin()+shift, nano.Photon_genPartFlav()[iph]);

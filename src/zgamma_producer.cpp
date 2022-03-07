@@ -35,9 +35,9 @@ void ZGammaVarProducer::WriteZGammaVars(nano_tree &nano, pico_tree &pico, vector
       if(pico.out_photon_sig()[igamma]) {
         TLorentzVector dilep, photon, llg;
         dilep.SetPtEtaPhiM(pico.out_ll_pt()[ill], pico.out_ll_eta()[ill],
-                           pico.out_ll_phi()[ill],pico.out_ll_m()[ill]);
+                           pico.out_ll_phi()[ill], pico.out_ll_m()[ill]);
         photon.SetPtEtaPhiM(pico.out_photon_pt()[igamma], pico.out_photon_eta()[igamma],
-                            pico.out_photon_phi()[igamma],0);
+                            pico.out_photon_phi()[igamma], 0);
         llg = dilep + photon;
         pico.out_nllphoton()++;
         pico.out_llphoton_pt().push_back(llg.Pt());
@@ -50,38 +50,70 @@ void ZGammaVarProducer::WriteZGammaVars(nano_tree &nano, pico_tree &pico, vector
         pico.out_llphoton_iph().push_back(igamma);
         pico.out_llphoton_ill().push_back(ill);
         TLorentzVector lminus, lplus;
+	TLorentzVector lep1, lep2;
+	TLorentzVector l1err, l2err, pherr;
+	double ptl1err, ptl2err, ptpherr;
+	double dml1, dml2, dmph;
+	ptpherr = pico.out_photon_pterr()[igamma] * photon.Pt() / photon.P();
+	pherr.SetPtEtaPhiM(pico.out_photon_pt()[igamma] + ptpherr,
+			   pico.out_photon_eta()[igamma], pico.out_photon_phi()[igamma], 0);
         if(pico.out_ll_lepid()[ill] == 11) {
           int iel1 = pico.out_ll_i1()[ill];
           int iel2 = pico.out_ll_i2()[ill];
           if(pico.out_el_charge()[iel1] < 0) {
             lminus.SetPtEtaPhiM(pico.out_el_pt()[iel1], pico.out_el_eta()[iel1],
-                                pico.out_el_phi()[iel1],0.0005);
+                                pico.out_el_phi()[iel1], 0.0005);
             lplus.SetPtEtaPhiM(pico.out_el_pt()[iel2], pico.out_el_eta()[iel2],
-                               pico.out_el_phi()[iel2],0.0005);
+                               pico.out_el_phi()[iel2], 0.0005);
           }
           else {
             lplus.SetPtEtaPhiM(pico.out_el_pt()[iel1], pico.out_el_eta()[iel1],
-                               pico.out_el_phi()[iel1],0.0005);
+                               pico.out_el_phi()[iel1], 0.0005);
             lminus.SetPtEtaPhiM(pico.out_el_pt()[iel2], pico.out_el_eta()[iel2],
-                                pico.out_el_phi()[iel2],0.0005);
+                                pico.out_el_phi()[iel2], 0.0005);
           }
+	  lep1.SetPtEtaPhiM(pico.out_el_pt()[iel1], pico.out_el_eta()[iel1], pico.out_el_phi()[iel1], 0.0005);
+	  lep2.SetPtEtaPhiM(pico.out_el_pt()[iel2], pico.out_el_eta()[iel2], pico.out_el_phi()[iel2], 0.0005);
+	  ptl1err = pico.out_el_energyErr()[iel1] * lep1.Pt() / lep1.P();
+	  ptl2err = pico.out_el_energyErr()[iel2] * lep2.Pt() / lep2.P();
+	  l1err.SetPtEtaPhiM(pico.out_el_pt()[iel1] + ptl1err,
+			     pico.out_el_eta()[iel1], pico.out_el_phi()[iel1], 0.0005);
+          l2err.SetPtEtaPhiM(pico.out_el_pt()[iel2] + ptl2err,
+                             pico.out_el_eta()[iel2], pico.out_el_phi()[iel2], 0.0005);
+	  dml1 = (l1err + lep2 + photon).M() - (lep1 + lep2 + photon).M();
+	  dml2 = (lep1 + l2err + photon).M() - (lep1 + lep2 + photon).M();
+	  dmph = (lep1 + lep2 + pherr).M() - (lep1 + lep2 + photon).M();
         }
         else {
           int imu1 = pico.out_ll_i1()[ill];
           int imu2 = pico.out_ll_i2()[ill];
           if(pico.out_mu_charge()[imu1] < 0) {
             lminus.SetPtEtaPhiM(pico.out_mu_pt()[imu1], pico.out_mu_eta()[imu1],
-                                pico.out_mu_phi()[imu1],0.105);
+                                pico.out_mu_phi()[imu1], 0.105);
             lplus.SetPtEtaPhiM(pico.out_mu_pt()[imu2], pico.out_mu_eta()[imu2],
-                               pico.out_mu_phi()[imu2],0.105);
+                               pico.out_mu_phi()[imu2], 0.105);
           }
           else {
             lplus.SetPtEtaPhiM(pico.out_mu_pt()[imu1], pico.out_mu_eta()[imu1],
-                               pico.out_mu_phi()[imu1],0.105);
+                               pico.out_mu_phi()[imu1], 0.105);
             lminus.SetPtEtaPhiM(pico.out_mu_pt()[imu2], pico.out_mu_eta()[imu2],
-                                pico.out_mu_phi()[imu2],0.105);
+                                pico.out_mu_phi()[imu2], 0.105);
           }
+          lep1.SetPtEtaPhiM(pico.out_mu_pt()[imu1], pico.out_mu_eta()[imu1], pico.out_mu_phi()[imu1], 0.0005);
+          lep2.SetPtEtaPhiM(pico.out_mu_pt()[imu2], pico.out_mu_eta()[imu2], pico.out_mu_phi()[imu2], 0.0005);
+          ptl1err = pico.out_mu_ptErr()[imu1];
+          ptl2err = pico.out_mu_ptErr()[imu2];
+          l1err.SetPtEtaPhiM(pico.out_mu_pt()[imu1] + ptl1err,
+                             pico.out_mu_eta()[imu1], pico.out_mu_phi()[imu1], 0.10566);
+          l2err.SetPtEtaPhiM(pico.out_mu_pt()[imu2] + ptl2err,
+                             pico.out_mu_eta()[imu2], pico.out_mu_phi()[imu2], 0.10566);
+          dml1 = (l1err + lep2 + photon).M() - (lep1 + lep2 + photon).M();
+          dml2 = (lep1 + l2err + photon).M() - (lep1 + lep2 + photon).M();
+          dmph = (lep1 + lep2 + pherr).M() - (lep1 + lep2 + photon).M();
         }
+	pico.out_llphoton_dml1().push_back(dml1);
+	pico.out_llphoton_dml2().push_back(dml2);
+	pico.out_llphoton_dmph().push_back(dmph);
 
 	// Variables used for defining kinematic angles presented in https://arxiv.org/pdf/1108.2274.pdf
         double M = llg.M(), mll = dilep.M();
@@ -99,8 +131,8 @@ void ZGammaVarProducer::WriteZGammaVars(nano_tree &nano, pico_tree &pico, vector
         TLorentzVector hH = llg;
         hH.Boost(-1*hTransverseBoost);
         double hPz = hH.Pz(), hE = hH.E();
-        q.SetPxPyPzE(0,0,(hPz+hE)/2,(hE+hPz)/2);
-        qBar.SetPxPyPzE(0,0,(hPz-hE)/2,(hE-hPz)/2);
+        q.SetPxPyPzE(0, 0 ,(hPz+hE)/2,(hE+hPz)/2);
+        qBar.SetPxPyPzE(0, 0 ,(hPz-hE)/2,(hE-hPz)/2);
         q.Boost(hTransverseBoost);
         qBar.Boost(hTransverseBoost);
 

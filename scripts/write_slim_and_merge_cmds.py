@@ -16,6 +16,10 @@ def findBaseSampleNames(folder):
     dataset_tag = dataset_tag.split('__RunIISummer20UL17NanoAODv2__')[0]
     dataset_tag = dataset_tag.split('__RunIISummer20UL18NanoAODv2__')[0]
 
+    dataset_tag = dataset_tag.split('__RunIISummer20UL16NanoAODv9__')[0]
+    dataset_tag = dataset_tag.split('__RunIISummer20UL17NanoAODv9__')[0]
+    dataset_tag = dataset_tag.split('__RunIISummer20UL18NanoAODv9__')[0]
+
     dataset_tag = dataset_tag.split('_ext')[0]
     dataset_tag = dataset_tag.replace('.root','')
     infiles.add(dataset_tag)

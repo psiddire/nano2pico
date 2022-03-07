@@ -32,14 +32,15 @@ vector<int> MuonProducer::WriteMuons(nano_tree &nano, pico_tree &pico, vector<in
     bool looseid = nano.Muon_looseId()[imu];
     bool mediumid = nano.Muon_mediumId()[imu];
     bool tightid = nano.Muon_tightId()[imu];
+    float iso = nano.Muon_pfRelIso03_all()[imu];
     bool isSignal = false;
 
     if (pt <= MuonPtCut) continue;
     if (fabs(eta) > MuonEtaCut) continue;
     if (fabs(dz) > MuonDzCut) continue;
     if (fabs(dxy) > MuonDxyCut) continue;
-    if ((looseid || (pt > 200 && nano.Muon_highPtId()[imu])) &&
-	nano.Muon_pfRelIso03_all()[imu] < MuonRelIsoCut && sip3d < 4)
+
+    if ((looseid || (pt > 200 && nano.Muon_highPtId()[imu])) && iso < MuonRelIsoCut && sip3d < 4)
       isSignal = true;
 
     // muons passing signal cuts get put at the very front
@@ -52,10 +53,11 @@ vector<int> MuonProducer::WriteMuons(nano_tree &nano, pico_tree &pico, vector<in
     pico.out_mu_pt()         .insert(pico.out_mu_pt()         .begin()+shift, pt);
     pico.out_mu_eta()        .insert(pico.out_mu_eta()        .begin()+shift, eta);
     pico.out_mu_phi()        .insert(pico.out_mu_phi()        .begin()+shift, phi);
+    pico.out_mu_ptErr()      .insert(pico.out_mu_ptErr()      .begin()+shift, nano.Muon_ptErr()[imu]);
     pico.out_mu_dz()         .insert(pico.out_mu_dz()         .begin()+shift, dz);
     pico.out_mu_dxy()        .insert(pico.out_mu_dxy()        .begin()+shift, dxy);
     pico.out_mu_miniso()     .insert(pico.out_mu_miniso()     .begin()+shift, nano.Muon_miniPFRelIso_all()[imu]);
-    pico.out_mu_reliso()     .insert(pico.out_mu_reliso()     .begin()+shift, nano.Muon_pfRelIso03_all()[imu]);
+    pico.out_mu_reliso()     .insert(pico.out_mu_reliso()     .begin()+shift, iso);
     pico.out_mu_sip3d()      .insert(pico.out_mu_sip3d()      .begin()+shift, sip3d);
     pico.out_mu_ip3d()       .insert(pico.out_mu_ip3d()       .begin()+shift, nano.Muon_ip3d()[imu]);
     pico.out_mu_looseid()    .insert(pico.out_mu_looseid()    .begin()+shift, looseid);

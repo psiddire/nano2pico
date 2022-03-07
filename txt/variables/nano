@@ -47,6 +47,7 @@ array<float> Electron_r9
 array<float> Electron_sieie
 array<float> Electron_sip3d
 array<float> Electron_mvaTTH
+array<float> Electron_scEtOverPt
 array<int> Electron_charge
 # cut-based ID Fall17 V2 (0:fail, 1:veto, 2:loose, 3:medium, 4:tight)
 array<int> Electron_cutBased

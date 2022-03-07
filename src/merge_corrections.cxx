@@ -52,6 +52,7 @@ int main(int argc, char *argv[]){
   vector<string> input_paths(argv+optind+1, argv+argc);
 
   int year = Contains(input_paths[0], "UL16") ? 2016 : (Contains(input_paths[0], "UL17") ? 2017 : 2018);
+  // int year = Contains(input_paths[0], "RunIISummer16") ? 2016 : (Contains(input_paths[0], "RunIIFall17") ? 2017 : 2018);
   cout << "Running with settings for year = "<<year<<"."<<endl; 
 
   corrections_tree corr("", output_path.c_str());
@@ -118,7 +119,6 @@ void FixLumi(corrections_tree &corr, const string &corr_path, int year){
   double xsec(0.); const float lumi = 1000.;
   xsec = xsec::crossSection(corr_path, year);  
   corr.out_w_lumi() = xsec*lumi/corr.out_neff();
-  // corr.out_weight() = corr.out_weight()/corr.out_nent();
 }
 
 

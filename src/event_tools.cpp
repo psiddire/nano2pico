@@ -9,28 +9,12 @@ EventTools::EventTools(const string &name_, int year_):
   name(name_),
   year(year_),
   isTTJets_LO_Incl(false),
-  isTTJets_LO_MET(false),
-  isTTJets_LO_HT(false),
-  isWJets_LO(false),
-  isDYJets_LO(false),
   dataset(-1){
 
-  if(Contains(name, "TTJets_") && Contains(name, "genMET-") && Contains(name, "madgraphMLM"))
-    isTTJets_LO_MET = true;
-
-  if(Contains(name, "TTJets_") && !Contains(name, "TTJets_HT") && !Contains(name, "genMET-") &&Contains(name, "madgraphMLM"))
+  if(Contains(name, "TTJets_") && Contains(name, "madgraphMLM"))
     isTTJets_LO_Incl = true;
 
-  if(Contains(name, "TTJets_HT") && Contains(name, "madgraphMLM"))
-    isTTJets_LO_HT = true;
-
-  if(Contains(name, "WJetsToLNu_Tune")  && Contains(name,"madgraphMLM"))
-    isWJets_LO = true;
-
-  if(Contains(name, "DYJetsToLL_M-50_Tune")  && Contains(name,"madgraphMLM"))
-    isDYJets_LO = true;
-
-  if(Contains(name, "EGamma")) // looks like this replaced SingleElectron and DoubleEG starting in 2018
+  if(Contains(name, "EGamma")) // Replaced SingleElectron and DoubleEG starting in 2018
     dataset = Dataset::EGamma;
   else if(Contains(name, "DoubleEG"))
     dataset = Dataset::DoubleEG;
@@ -42,20 +26,9 @@ EventTools::~EventTools(){
 }
 
 void EventTools::WriteStitch(nano_tree &nano, pico_tree &pico){
-  pico.out_stitch_photon() = pico.out_stitch_htmet() = pico.out_stitch() = pico.out_stitch_ht() = true;
-  if(isTTJets_LO_Incl) {
-    if (nano.LHE_HTIncoming()>600)
-      pico.out_stitch_htmet() = pico.out_stitch_ht() = false;
-    if(year==2018 && nano.GenMET_pt()>80)
-      pico.out_stitch_htmet() = pico.out_stitch() = false;
-    else if (nano.GenMET_pt()>150)
-      pico.out_stitch_htmet() = pico.out_stitch() = false;
-  }
+  pico.out_stitch_photon() = pico.out_stitch() = true;
 
-  if (isTTJets_LO_MET && nano.LHE_HTIncoming()>600)
-      pico.out_stitch_htmet() = pico.out_stitch_ht() = false;
-
-  if (isTTJets_LO_Incl || isTTJets_LO_MET || isTTJets_LO_HT) {
+  if (isTTJets_LO_Incl) {
     //remove events covered by TTG, see AN-17-197 (TOP-18-010)
     //stitch if prompt photon w pt>13 |eta|<3 deltaR(genPart[pt>5])>0.2
     for (unsigned int mc_idx = 0; mc_idx < nano.GenPart_pdgId().size(); mc_idx++) {
@@ -80,11 +53,6 @@ void EventTools::WriteStitch(nano_tree &nano, pico_tree &pico){
     }
   }
 
-  if(isDYJets_LO  && nano.LHE_HT()>70)
-    pico.out_stitch_htmet() = pico.out_stitch_ht() = pico.out_stitch() = false;
-
-  if(isWJets_LO  && nano.LHE_HT()>70)
-    pico.out_stitch_htmet() = pico.out_stitch_ht() = pico.out_stitch() = false;
   return;
 }
 
@@ -218,13 +186,12 @@ int EventTools::GetEventType(){
   }
 
   if(sample < 0 || category < 0 || bin < 0 || category > 9 || bin > 99){
-    // DBG("Could not find type code for " << name << ": sample=" << sample << ", category=" << category << ", bin=" << bin);
     int code = -(1000*abs(sample)+100*abs(category)+abs(bin));
     if(code >= 0) code = -99999;
     return code;
   }else{
     int code = 1000*sample+100*category+bin;
-    if(code < 0 || code > 107000){
+    if(code < 0 || code > 207000){
       cout<<"ERROR:: Type code out of range for " << name << ": sample=" << sample << ", category=" << category << ", bin=" << bin;
     }
     return code;

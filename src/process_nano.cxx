@@ -38,10 +38,9 @@ namespace {
   string out_dir = "";
   int nent_test = -1;
   bool debug = false;
-  bool isZgamma = true;
   // requirements for jets to be counted in njet, mofified for Zgamma below
   float min_jet_pt = 30.0;
-  float max_jet_eta =  2.4;
+  float max_jet_eta = 4.7;
 }
 
 void WriteDataQualityFilters(nano_tree& nano, pico_tree& pico);
@@ -60,10 +59,12 @@ int main(int argc, char *argv[]){
 
   bool isData = Contains(in_file, "Run201") ? true : false;
   bool isFastsim = Contains(in_file, "Fast") ? true : false;
-  int year = Contains(in_file, "RunIISummer16") ? 2016 : (Contains(in_file, "RunIIFall17") ? 2017 : 2018);
+  int year = Contains(in_file, "UL16") ? 2016 : (Contains(in_file, "UL17") ? 2017 : 2018);
+  // int year = Contains(in_file, "RunIISummer16") ? 2016 : (Contains(in_file, "RunIIFall17") ? 2017 : 2018);
   if (isData) {
     year = Contains(in_file, "Run2016") ? 2016 : (Contains(in_file, "Run2017") ? 2017 : 2018);
   }
+  cout << "Running with settings for year = "<<year<<"."<<endl;
 
   vector<vector<int>> VVRunLumi;
   if (isData) {
@@ -90,9 +91,6 @@ int main(int argc, char *argv[]){
 
   time_t begtime, endtime;
   time(&begtime);
-
-  // jet requirements
-  max_jet_eta = 4.7;
 
   // B-tag working points
   map<int, vector<float>> btag_wpts{
@@ -125,10 +123,10 @@ int main(int argc, char *argv[]){
   //BTagWeighter btag_df_weighter(year, false, true, btag_df_wpts[year]);
   BTagWeighter btag_weighter(year, isFastsim, false, btag_wpts[year]);
   BTagWeighter btag_df_weighter(year, isFastsim, true, btag_df_wpts[year]);
-  LeptonWeighter lep_weighter(year);
-  LeptonWeighter lep_weighter16gh(year, true);
+  LeptonWeighter lep_weighter(year, true);
+  LeptonWeighter lep_weighter16gh(year, true, true);
   PrefireWeighter prefire_weighter(year, true);
-  PhotonWeighter photon_weighter(year);
+  PhotonWeighter photon_weighter(year, true);
 
   // Other tools
   EventTools event_tools(in_path, year);
@@ -231,7 +229,7 @@ int main(int argc, char *argv[]){
 
     pico.out_stitch_dy() = true;
     if (!isData)
-	    mc_producer.WriteGenParticles(nano, pico);
+      mc_producer.WriteGenParticles(nano, pico);
 
     if (debug) cout<<"INFO:: Writing jets, MET and ISR vars"<<endl;
     //jet producer uses sys_met_phi, so met_producer must be called first
@@ -239,30 +237,6 @@ int main(int argc, char *argv[]){
 
     vector<int> sig_jet_nano_idx = jet_producer.WriteJets(nano, pico, jet_islep_nano_idx, jet_isvlep_nano_idx, jet_isphoton_nano_idx,
                                                           btag_wpts[year], btag_df_wpts[year], isFastsim);
-    jet_producer.WriteJetSystemPt(nano, pico, sig_jet_nano_idx, btag_wpts[year][1], isFastsim); // usually w.r.t. medium WP
-
-    // calculate mT only for single lepton events
-    pico.out_mt() = -999; 
-    if (pico.out_nlep()==1) {
-      float MET_pt, MET_phi;
-      getMETWithJEC(nano, year, isFastsim, MET_pt, MET_phi);
-      if (sig_el_nano_idx.size()>0) {
-        pico.out_mt() = GetMT(MET_pt, MET_phi, 
-          nano.Electron_pt()[sig_el_nano_idx[0]], nano.Electron_phi()[sig_el_nano_idx[0]]);
-      } else {
-        pico.out_mt() = GetMT(MET_pt, MET_phi, 
-          nano.Muon_pt()[sig_mu_nano_idx[0]], nano.Muon_phi()[sig_mu_nano_idx[0]]);
-      }
-    } 
-    if (pico.out_ntrulep()==1) {
-      for (unsigned imc(0); imc<pico.out_mc_id().size(); imc++){
-        if (abs(pico.out_mc_id()[imc])==11 || abs(pico.out_mc_id()[imc])==13) {
-          pico.out_mt_tru() = GetMT(pico.out_met_tru(), pico.out_met_tru_phi(), 
-                                pico.out_mc_pt()[imc], pico.out_mc_phi()[imc]);
-          break;
-        }
-      }
-    } 
 
     if (debug) cout<<"INFO:: Writing analysis specific variables"<<endl;
     // might need as input sig_el_nano_idx, sig_mu_nano_idx, sig_ph_nano_idx
@@ -277,21 +251,25 @@ int main(int argc, char *argv[]){
     //              *** Calculating weight branches ***
     // ----------------------------------------------------------------------------------------------
     if (debug) cout<<"INFO:: Calculating weights"<<endl;
-    float w_lep(1.), w_fs_lep(1.);
+    float w_lep(1.);
     float w_photon(1.);
-    vector<float> sys_lep(2,1.), sys_fs_lep(2,1.);
+    vector<float> sys_lep(2,1.);
     vector<float> sys_photon(2,1.);
 
-    if(isZgamma) {
+    if (!isData) {
       photon_weighter.FullSim(pico, w_photon, sys_photon);
-      if(nano.event() % 3516 <= 1887) lep_weighter.FullSim(pico, w_lep, sys_lep);
-      else lep_weighter16gh.FullSim(pico, w_lep, sys_lep);
+      if (year==2016) {
+        if(nano.event() % 3516 <= 1887) lep_weighter.FullSim(pico, w_lep, sys_lep);
+        else lep_weighter16gh.FullSim(pico, w_lep, sys_lep);
+      }
+      else {
+	lep_weighter.FullSim(pico, w_lep, sys_lep);
+      }
     }
-    else if (!isData) {
-      lep_weighter.FullSim(pico, w_lep, sys_lep);
-    }
-    pico.out_w_photon()   = w_photon;
+    pico.out_w_photon() = w_photon;
+    pico.out_w_lep() = w_lep;
     pico.out_sys_photon() = sys_photon; 
+    pico.out_sys_lep() = sys_lep;
 
     // to be calculated in Step 2: merge_corrections
     if (!isData)
@@ -315,7 +293,7 @@ int main(int argc, char *argv[]){
     pico.out_sys_prefire() = sys_prefire;
 
     // do not include w_prefire, or anything that should not be renormalized! Will be set again in Step 3
-    pico.out_weight() = pico.out_w_lumi() * w_photon * pico.out_w_pu();
+    pico.out_weight() = pico.out_w_lumi() * w_photon * w_lep * pico.out_w_pu();
 
     // ----------------------------------------------------------------------------------------------
     //              *** Add up weights to save for renormalization step ***
